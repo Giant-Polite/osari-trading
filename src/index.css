@@ -1,13 +1,121 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Osari Trading Brand Colors - Gold, Deep Brown, Olive Green */
+    --background: 33 52% 89%;
+    --foreground: 16 25% 19%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 16 25% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 16 25% 19%;
+
+    --primary: 45 62% 52%;
+    --primary-foreground: 16 25% 19%;
+
+    --secondary: 82 39% 30%;
+    --secondary-foreground: 33 52% 89%;
+
+    --muted: 33 35% 75%;
+    --muted-foreground: 16 25% 40%;
+
+    --accent: 25 45% 13%;
+    --accent-foreground: 33 52% 89%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 33 35% 80%;
+    --input: 33 35% 85%;
+    --ring: 45 62% 52%;
+
+    --radius: 0.5rem;
+
+    /* Hero gradient */
+  /* Hero gradient – now soft white */
+  --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(33 52% 89%) 50%, hsl(0 0% 100%) 100%);
+
+    
+    /* Hero background */
+    
+    
+    /* Card hover effect */
+    --shadow-gold: 0 10px 30px -10px hsl(45 62% 52% / 0.3);
+  }
+
+  .dark {
+    --background: 25 45% 13%;
+    --foreground: 33 52% 89%;
+
+    --card: 16 25% 19%;
+    --card-foreground: 33 52% 89%;
+
+    --popover: 16 25% 19%;
+    --popover-foreground: 33 52% 89%;
+
+    --primary: 45 62% 52%;
+    --primary-foreground: 16 25% 19%;
+
+    --secondary: 82 39% 30%;
+    --secondary-foreground: 33 52% 89%;
+
+    --muted: 16 25% 25%;
+    --muted-foreground: 33 35% 65%;
+
+    --accent: 82 39% 30%;
+    --accent-foreground: 33 52% 89%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 16 25% 25%;
+    --input: 16 25% 25%;
+    --ring: 45 62% 52%;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes scroll-left-fast {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left-fast {
+  animation: scroll-left-fast 20s linear infinite; /* ⏩ twice as fast as normal */
+}
+
+@keyframes scroll-left-seamless {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left-seamless {
+  display: flex;
+  width: max-content;
+  animation: scroll-left-seamless 50s linear infinite;
 }

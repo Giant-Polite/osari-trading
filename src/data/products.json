@@ -1,0 +1,410 @@
+[
+  {
+    "id": "cooking-oils-1",
+    "name": "Banadir Sesame Oil Small",
+    "category": "cooking-essential-oils",
+    "image": "/images/cooking-essential-oils/Banadir_Sesame_Oil_Small_c32f726d-f918-4ade-8bad-87b2d0a2f659.jpg",
+    "description": "High-quality sesame oil perfect for cooking and seasoning.",
+    "inStock": true
+  },
+  {
+    "id": "cooking-oils-2",
+    "name": "Extra Virgin Olive Oil 1 Liter",
+    "category": "cooking-essential-oils",
+    "image": "/images/cooking-essential-oils/Extra_virgin_olive_oil_1_liter.jpg",
+    "description": "Premium extra virgin olive oil for healthy cooking and salads.",
+    "inStock": true
+  },
+  {
+    "id": "dates-1",
+    "name": "Ajwa Al Madina Orchid Dates",
+    "category": "dates",
+    "image": "/images/dates/Ajwa_Al_Madina_Orchid_Dates.jpg",
+    "description": "Soft, sweet, and nutritious Ajwa dates from Al Madina.",
+    "inStock": true
+  },
+  {
+    "id": "dates-2",
+    "name": "Al Madina Dates 1",
+    "category": "dates",
+    "image": "/images/dates/Al_Madina_Dates_1.jpg",
+    "description": "Premium Al Madina dates, perfect for snacking or baking.",
+    "inStock": true
+  },
+  {
+    "id": "dates-3",
+    "name": "Aldayfe Dates",
+    "category": "dates",
+    "image": "/images/dates/Aldayfe_Dates.jpg",
+    "description": "Sweet and flavorful Aldayfe dates for everyday consumption.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-1",
+    "name": "Abu Walad Sandwich Biscuits",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/Abu_Walad_Sandwhich_Biscuits.jpg",
+    "description": "Crispy and tasty sandwich biscuits, ideal with tea or coffee.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-2",
+    "name": "Shani Bottle",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/Shani_Bottle.jpg",
+    "description": "Refreshing Shani soft drink in a convenient bottle.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-3",
+    "name": "Shani Can",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/Shani_Can.jpg",
+    "description": "Classic Shani soft drink in a can, perfect for on-the-go.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-4",
+    "name": "Sparkling Vimto Can 330ml",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/SparklingVimtoCan_330ml.jpg",
+    "description": "Sparkling Vimto drink in a convenient 330ml can.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-5",
+    "name": "Sparkling Vimto Fruit Flavor Drink 500ml",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/SparklingVimtoFruitFlavorDrink_500ml_PlasticBottle.jpg",
+    "description": "Delicious fruit-flavored Vimto sparkling beverage, 500ml.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-6",
+    "name": "Vimto Fruit Syrup 710ml",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/VimtoFruitSyrup710ml.jpg",
+    "description": "Sweet Vimto fruit syrup, perfect for making refreshing drinks.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-1",
+    "name": "Aahubarah Basmati Sela Rice",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/AahubarahBasmatiSelaRice.jpg",
+    "description": "Premium long-grain Basmati rice, ideal for everyday meals.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-2",
+    "name": "Asli Adzuku Beans Abuulo 2lbs",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/AsliAdzukuBeans_Abuulo_2lbs.jpg",
+    "description": "High-quality Adzuku beans, perfect for soups and stews.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-3",
+    "name": "Asli Pot Barley 2lbs",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/AsliPotBarley2lbs.jpg",
+    "description": "Nutritious barley, ideal for healthy cooking and salads.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-4",
+    "name": "Asli Red Chori 2lbs",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/AsliRedChori2lbs.jpg",
+    "description": "Red Chori beans for traditional dishes and stews.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-5",
+    "name": "Asli White Corn Meal Coarse Ugali 2lbs",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/AsliWhiteCornMealCoarse_Ugali_2lbs.jpg",
+    "description": "Coarse white cornmeal for making authentic Ugali.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-6",
+    "name": "Juwar Whole Sorghum",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Juwar_Whole_Sorghum.jpg",
+    "description": "Whole sorghum grains for cooking and baking.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-7",
+    "name": "MultiGrain ATTA 9-Grain Flour Blend",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/MultiGrain_ATTA_9-Grain_flour_blend.jpg",
+    "description": "Healthy 9-grain flour blend for breads and pastries.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-8",
+    "name": "Ocean Pearl Basmati Rice",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Ocean_Pearl_Basmati_Rice.jpg",
+    "description": "Fragrant and fluffy Basmati rice for all occasions.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-9",
+    "name": "Pasta Lori Puglia Capellini 1 Pasta",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Pasta_Lori_Puglia_Capellini_1_Pasta.jpg",
+    "description": "Thin and delicate Italian Capellini pasta.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-10",
+    "name": "Pasta Lori Puglia Spaghettini 2 Pasta",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Pasta_Lori_Puglia_Spaghettini_2_Pasta.jpg",
+    "description": "Authentic spaghettini pasta for light meals.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-11",
+    "name": "Pasta ZARA Chifferi Rigati Pasta",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/PastaZARA_Chifferi_Rigati_Pasta.jpg",
+    "description": "Rigati pasta with ridges to hold sauce perfectly.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-12",
+    "name": "Pasta ZARA Macaroni Elbows",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/PastaZARA_Macaroni_Elbows.jpg",
+    "description": "Classic elbow macaroni for everyday pasta dishes.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-13",
+    "name": "Sella Parboiled Basmati Rice 1",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Sella_Parboiled_Basmati_Rice_1.jpg",
+    "description": "Premium parboiled Basmati rice, ideal for fluffy cooking.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-14",
+    "name": "SWAD Multi Grain Chappati Flour",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/SWAD_Multi_Grain_Chappati_Flour.jpg",
+    "description": "Multigrain flour perfect for making nutritious chapati.",
+    "inStock": true
+  },
+  {
+    "id": "sauces-dips-1",
+    "name": "Cholula Hot Sauce Original",
+    "category": "sauces-dips",
+    "image": "/images/sauces-dips/CholulaHotSauceOriginal.jpg",
+    "description": "Authentic Mexican hot sauce to spice up your meals.",
+    "inStock": true
+  },
+  {
+    "id": "sauces-dips-2",
+    "name": "Heinz Tomato Ketchup 2lb",
+    "category": "sauces-dips",
+    "image": "/images/sauces-dips/HeinzTomatoKetchup_2lb.jpg",
+    "description": "Classic Heinz tomato ketchup for dipping and cooking.",
+    "inStock": true
+  },
+  {
+    "id": "sauces-dips-3",
+    "name": "Hidden Valley The Original Homestyle Thick & Creamy",
+    "category": "sauces-dips",
+    "image": "/images/sauces-dips/HiddenValleyTheOriginalHomestyleThick_Creamy.jpg",
+    "description": "Rich and creamy ranch dressing for salads and dips.",
+    "inStock": true
+  },
+  {
+    "id": "sauces-dips-4",
+    "name": "Kesar Mango Pulp",
+    "category": "sauces-dips",
+    "image": "/images/sauces-dips/Kesar_Mango_Pulp.jpg",
+    "description": "Sweet and smooth mango pulp for desserts and drinks.",
+    "inStock": true
+  },
+  {
+    "id": "sauces-dips-5",
+    "name": "Sweet Baby Ray's Barbecue Sauce 40oz 2ct",
+    "category": "sauces-dips",
+    "image": "/images/sauces-dips/SweetBabyRay_sBarbecueSauce_40oz_2ct.jpg",
+    "description": "Rich barbecue sauce perfect for grilling and marinating.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-1",
+    "name": "Deep Premium Spices Cloves 100g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCloves_100g.jpg",
+    "description": "Aromatic cloves ideal for cooking and baking.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-2",
+    "name": "Deep Premium Spices Turmeric Powder 400g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesTurmericPowder_400g.jpg",
+    "description": "Bright yellow turmeric powder for authentic flavor and color.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-3",
+    "name": "Deep Premium Spices Coriander Powder 400g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCorianderPowder_400g.jpg",
+    "description": "Fresh coriander powder for rich, aromatic dishes.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-4",
+    "name": "EK Cin Food Seasoning",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/EK_Cin_food_seasoning.jpg",
+    "description": "Versatile seasoning blend for savory dishes.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-5",
+    "name": "Deep Premium Spices Coriander Seeds 100g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCorianderSeeds_100g.jpg",
+    "description": "Whole coriander seeds to grind fresh for maximum flavor.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-6",
+    "name": "Kirkland Fine Ground Black Pepper 349g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/KirklandFineGroundBlackPepper_349g..jpg",
+    "description": "Premium black pepper for everyday seasoning.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-7",
+    "name": "Deep Premium Spices Cumin Seeds 200g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCuminSeeds_200g.jpg",
+    "description": "Fragrant cumin seeds for authentic cooking.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-8",
+    "name": "Kirkland Organic Saigon Cinnamon Ground 303g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/KirklandOrganicSaigonCinnamonGround_303g.jpg",
+    "description": "Aromatic ground cinnamon for baking and drinks.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-9",
+    "name": "Deep Premium Spices Curry Powder 150g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCurryPowder_150g.jpg",
+    "description": "Rich and fragrant curry powder for your dishes.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-10",
+    "name": "Kirkland Signature Ground Turmeric 12oz",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/KirklandSignatureGroundTurmeric_12oz.jpg",
+    "description": "Bright and earthy turmeric powder for vibrant cooking.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-11",
+    "name": "Deep Premium Spices Garlic Powder 400g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesGarlicPowder_400g.jpg",
+    "description": "Rich garlic flavor powder for seasoning and cooking.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-12",
+    "name": "Maggi Seasoning Cubes",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/Maggi_Seasoning_cubes.jpg",
+    "description": "Versatile seasoning cubes for soups, sauces, and stews.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-13",
+    "name": "Deep Premium Spices Ginger Powder 400g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesGingerPowder_400g.jpg",
+    "description": "Pure ginger powder for spice and flavor.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-14",
+    "name": "McCormic Granulated Onion Cebolla Granulada 510g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/McCormicGranulatedOnionCebollaGranulada_510g.jpg",
+    "description": "Granulated onion for flavoring soups, sauces, and stews.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-15",
+    "name": "Deep Premium Spices Red Chili Crushed 350g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliCrushed_350g.jpg",
+    "description": "Crushed red chili for a spicy kick in your dishes.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-16",
+    "name": "McCormick Cayenne Red Pepper 396g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/McCormickCayenneRedPepper_396g.jpg",
+    "description": "Spicy cayenne pepper to elevate the flavor of any dish.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-17",
+    "name": "Deep Premium Spices Red Chili Powder Extra Hot 200g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliPowderExtraHot_200g.jpg",
+    "description": "Extra hot red chili powder for bold, spicy flavors.",
+    "inStock": true
+  },
+  {
+    "id": "spices-seasonings-18",
+    "name": "Deep Premium Spices Red Chili Powder 200g",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliPowder_200g.jpg",
+    "description": "Red chili powder for a moderate, flavorful heat.",
+    "inStock": true
+  },
+  {
+    "id": "tea-1",
+    "name": "Blue Horn Shaah Authentic Somali Tea Blend",
+    "category": "tea",
+    "image": "/images/tea/BlueHornShaahAuthenticSomaliTeaBlend.jpg",
+    "description": "Authentic Somali tea blend for a rich and aromatic experience.",
+    "inStock": true
+  },
+  {
+    "id": "tea-2",
+    "name": "Ketepa Pride Kenya's Finest Tea Bags",
+    "category": "tea",
+    "image": "/images/tea/Ketepa_Pride_Kenyas_Finest_Tea_Bags.jpg",
+    "description": "Premium Kenyan tea bags for a perfect cup every time.",
+    "inStock": true
+  },
+  {
+    "id": "tea-3",
+    "name": "Red Label Loose Leaf Black Tea",
+    "category": "tea",
+    "image": "/images/tea/Red_Label_Loose_Leaf_Black_Tea.jpg",
+    "description": "Classic black tea with rich flavor, perfect for brewing loose leaf.",
+    "inStock": true
+  }
+]
