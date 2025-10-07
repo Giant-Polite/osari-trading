@@ -11,11 +11,13 @@ const ProductsPage = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState(categoryFilter);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false); // State for mobile navbar toggle
 
   const { data: products, isLoading: loadingProducts } = useProducts();
   const { data: categories, isLoading: loadingCategories } = useCategories();
 
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  const navbarRef = useRef<HTMLDivElement | null>(null); // Reference for the navbar to scroll it
 
   // Filter products by search term
   const filteredProducts = useMemo(() => {
@@ -70,6 +72,18 @@ const ProductsPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [productsByCategory, categoryFilter]);
 
+  // Auto-scroll the navbar when category changes
+  useEffect(() => {
+    if (navbarRef.current && activeCategory) {
+      const activeBtn = navbarRef.current.querySelector(
+        `[data-category=${activeCategory}]`
+      );
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: "smooth", inline: "center" });
+      }
+    }
+  }, [activeCategory]);
+
   return (
     <main className="bg-white min-h-screen font-museo-slab">
       <div className="container mx-auto px-4 py-12">
@@ -84,8 +98,11 @@ const ProductsPage = () => {
         </header>
 
         {/* Sticky Horizontal Nav with Opaque Styling */}
-        <div className="sticky top-[64px] z-40 bg-[hsl(var(--primary))] py-3 px-4 shadow-2xl flex justify-center overflow-x-auto rounded-2xl mb-6 border border-[hsl(var(--primary))/0.3] animate-slide-up">
-          <div className="flex gap-2">
+        <div
+          ref={navbarRef}
+          className="sticky top-[64px] z-40 bg-[hsl(var(--primary))] py-3 px-4 shadow-2xl flex justify-center overflow-x-auto rounded-2xl mb-6 border border-[hsl(var(--primary))/0.3] animate-slide-up"
+        >
+          <div className="flex gap-2 overflow-x-auto space-x-2">
             {loadingCategories
               ? [...Array(6)].map((_, i) => (
                   <div
@@ -97,6 +114,7 @@ const ProductsPage = () => {
                   <button
                     key={cat.id}
                     onClick={() => scrollToCategory(cat.slug)}
+                    data-category={cat.slug} // Added to use in auto-scrolling
                     className={`relative px-4 py-2 font-museo-slab text-sm md:text-base font-semibold text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:bg-[hsl(var(--primary))/0.9] hover:shadow-lg ${
                       activeCategory === cat.slug
                         ? "font-extrabold bg-brown text-[hsl(var(--primary))] scale-110 shadow-md"
@@ -113,6 +131,34 @@ const ProductsPage = () => {
                   </button>
                 ))}
           </div>
+        </div>
+
+        {/* Mobile Navbar Toggle */}
+        <div className="block md:hidden">
+          <button
+            className="bg-[hsl(var(--primary))] text-white py-2 px-4 rounded-lg"
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+          >
+            Categories
+          </button>
+          {mobileNavOpen && (
+            <div className="mt-4">
+              {categories?.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => scrollToCategory(cat.slug)}
+                  data-category={cat.slug}
+                  className={`block w-full text-left px-4 py-2 font-museo-slab text-sm md:text-base font-semibold text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:bg-[hsl(var(--primary))/0.9] hover:shadow-lg ${
+                    activeCategory === cat.slug
+                      ? "font-extrabold bg-brown text-[hsl(var(--primary))] scale-110 shadow-md"
+                      : "text-white/90"
+                  }`}
+                >
+                  {cat.name.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Search */}
