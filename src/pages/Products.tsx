@@ -103,25 +103,30 @@ const ProductsPage = () => {
       <div className="container mx-auto px-4 py-8 md:py-12 relative">
         {/* 🏷️ Header Section */}
         <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8 md:mb-12 text-center"
-        >
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-amber-100 px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-3 md:mb-4">
-            <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
-            <span className="text-xs md:text-sm text-orange-800">
-              Premium Quality Products
-            </span>
-          </div>
-          <h1 className="text-4xl md:text-7xl bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 bg-clip-text text-transparent mb-3 md:mb-4 px-4">
-            Our Products
-          </h1>
-          <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-            Discover our premium selection of halal products, carefully curated
-            for quality and taste
-          </p>
-        </motion.header>
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  className="mb-10 md:mb-16 text-center"
+>
+  {/* Highlight Tag */}
+  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FFF4E1] to-[#FFE8CC] px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
+    <Sparkles className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#8B4513]" />
+    <span className="text-xs md:text-sm font-medium text-[#8B4513] tracking-wide">
+      Premium Quality Products
+    </span>
+  </div>
+
+  {/* Main Title */}
+  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-[#8B4513] via-[#C47F39] to-[#FFD700] bg-clip-text text-transparent mb-3 md:mb-5 px-4 leading-tight">
+    Our Products
+  </h1>
+
+  {/* Subtext */}
+  <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+    Explore our wide selection of authentic, high-quality halal products — sourced with care and crafted for exceptional taste.
+  </p>
+</motion.header>
+
 
         {/* 🔍 Search Bar */}
         <motion.div
