@@ -2,20 +2,33 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { useProducts, useCategories, type Product } from "@/hooks/useProducts";
 import TypewriterText from "@/components/TypewriterText";
 import { Input } from "@/components/ui/input";
-import { Search, Sparkles, X } from "lucide-react";
+import { Search, Sparkles, X, CheckCircle } from "lucide-react"; // Added CheckCircle
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button"; // Added Button
+import { useToast } from "@/hooks/use-toast"; // Added useToast
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
+
+// Helper function to manage cart in localStorage
+const addToCart = (productName: string) => {
+  const cart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
+  if (!cart.includes(productName)) {
+    cart.push(productName);
+    localStorage.setItem("cartProducts", JSON.stringify(cart));
+  }
+};
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { toast } = useToast(); // Initialize toast
 
   const { data: products, isLoading: loadingProducts } = useProducts();
   const { data: categories, isLoading: loadingCategories } = useCategories();
@@ -92,6 +105,19 @@ const ProductsPage = () => {
     }
   }, [activeCategory]);
 
+  // Handle Cart button click
+  const handleAddToCart = (productName: string) => {
+    addToCart(productName);
+    toast({
+      title: "Added to Contact Form",
+      description: `${productName} has been added to the contact form.`,
+      className:
+        "bg-gradient-to-r from-orange-500 to-amber-500 text-white border-none shadow-lg",
+      duration: 3000,
+      icon: <CheckCircle className="w-5 h-5" />,
+    });
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
       {/* ✨ Background Glow Effects */}
@@ -103,30 +129,24 @@ const ProductsPage = () => {
       <div className="container mx-auto px-4 py-8 md:py-12 relative">
         {/* 🏷️ Header Section */}
         <motion.header
-  initial={{ opacity: 0, y: -20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  className="mb-10 md:mb-16 text-center"
->
-  {/* Highlight Tag */}
-  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FFF4E1] to-[#FFE8CC] px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
-    <Sparkles className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#8B4513]" />
-    <span className="text-xs md:text-sm font-medium text-[#8B4513] tracking-wide">
-      Premium Quality Products
-    </span>
-  </div>
-
-  {/* Main Title */}
-  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-[#8B4513] via-[#C47F39] to-[#FFD700] bg-clip-text text-transparent mb-3 md:mb-5 px-4 leading-tight">
-    Our Products
-  </h1>
-
-  {/* Subtext */}
-  <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-    Explore our wide selection of authentic, high-quality halal products — sourced with care and crafted for exceptional taste.
-  </p>
-</motion.header>
-
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-10 md:mb-16 text-center"
+        >
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FFF4E1] to-[#FFE8CC] px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#8B4513]" />
+            <span className="text-xs md:text-sm font-medium text-[#8B4513] tracking-wide">
+              Premium Quality Products
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-[#8B4513] via-[#C47F39] to-[#FFD700] bg-clip-text text-transparent mb-3 md:mb-5 px-4 leading-tight">
+            Our Products
+          </h1>
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+            Explore our wide selection of authentic, high-quality halal products — sourced with care and crafted for exceptional taste.
+          </p>
+        </motion.header>
 
         {/* 🔍 Search Bar */}
         <motion.div
@@ -147,7 +167,7 @@ const ProductsPage = () => {
           </div>
         </motion.div>
 
-        {/* 🧭 Category Nav (Sticky below main Navbar) */}
+        {/* 🧭 Category Nav */}
         <motion.div
           ref={navbarRef}
           initial={{ opacity: 0 }}
@@ -207,7 +227,6 @@ const ProductsPage = () => {
                 transition={{ duration: 0.6, delay: catIndex * 0.1 }}
                 className="scroll-mt-40"
               >
-                {/* Category Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4 mb-6 md:mb-8 px-2">
                   <div className="flex-1">
                     <h2 className="text-2xl md:text-4xl bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent inline-block">
@@ -223,7 +242,6 @@ const ProductsPage = () => {
                   </Badge>
                 </div>
 
-                {/* Product Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-2">
                   {catProducts.map((product, index) => (
                     <motion.div
@@ -236,7 +254,6 @@ const ProductsPage = () => {
                       className="group bg-white rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 cursor-pointer"
                       onClick={() => setSelectedProduct(product)}
                     >
-                      {/* Product Image */}
                       <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 to-amber-50 aspect-square">
                         <img
                           src={product.image}
@@ -244,8 +261,6 @@ const ProductsPage = () => {
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                        {/* Hover Button */}
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                           <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 shadow-xl transform scale-90 group-hover:scale-100 transition-transform">
                             <span className="text-orange-600 text-sm md:text-base">
@@ -254,8 +269,6 @@ const ProductsPage = () => {
                           </div>
                         </div>
                       </div>
-
-                      {/* Product Info */}
                       <div className="p-4 md:p-5">
                         <h3 className="text-gray-900 mb-2 line-clamp-1">
                           {product.name}
@@ -286,7 +299,6 @@ const ProductsPage = () => {
           <div className="absolute top-10 left-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-60 h-60 bg-white rounded-full blur-3xl"></div>
         </div>
-
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex justify-center items-center gap-2 md:gap-3 flex-wrap text-center">
             <span className="text-2xl md:text-5xl text-white">
@@ -306,48 +318,44 @@ const ProductsPage = () => {
             open={!!selectedProduct}
             onOpenChange={() => setSelectedProduct(null)}
           >
-            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
-              <div className="relative">
-                {/* Image */}
-                <div className="relative h-64 md:h-80 bg-gradient-to-br from-orange-50 to-amber-50 overflow-hidden">
-                  <img
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-
-                  <button
-                    onClick={() => setSelectedProduct(null)}
-                    className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors shadow-lg"
+            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-6 md:p-8">
+              <DialogClose className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-400 z-10">
+                <X className="w-5 h-5 text-gray-700" />
+              </DialogClose>
+              <div className="relative h-64 md:h-80 bg-gradient-to-br from-orange-50 to-amber-50 overflow-hidden rounded-xl mb-6">
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <DialogHeader className="mb-6">
+                  <DialogTitle className="text-2xl md:text-3xl bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
+                    {selectedProduct.name}
+                  </DialogTitle>
+                </DialogHeader>
+                <p className="text-gray-700 leading-relaxed">
+                  {selectedProduct.description}
+                </p>
+                <div className="flex items-center gap-2 pt-4 border-t border-gray-200 mt-6">
+                  <Badge className="bg-green-500 text-white hover:bg-green-600">
+                    ✓ Halal Certified
+                  </Badge>
+                  <Badge
+                    variant="secondary"
+                    className="bg-blue-50 text-blue-700 border border-blue-200"
                   >
-                    <X className="w-5 h-5 text-gray-700" />
-                  </button>
+                    Premium Quality
+                  </Badge>
                 </div>
-
-                <div className="p-6 md:p-8">
-                  <DialogHeader className="mb-6">
-                    <DialogTitle className="text-2xl md:text-3xl bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
-                      {selectedProduct.name}
-                    </DialogTitle>
-                  </DialogHeader>
-
-                  <p className="text-gray-700 leading-relaxed">
-                    {selectedProduct.description}
-                  </p>
-
-                  <div className="flex items-center gap-2 pt-4 border-t border-gray-200 mt-6">
-                    <Badge className="bg-green-500 text-white hover:bg-green-600">
-                      ✓ Halal Certified
-                    </Badge>
-                    <Badge
-                      variant="secondary"
-                      className="bg-blue-50 text-blue-700 border border-blue-200"
-                    >
-                      Premium Quality
-                    </Badge>
-                  </div>
-                </div>
+                {/* Cart Button */}
+                <Button
+                  onClick={() => handleAddToCart(selectedProduct.name)}
+                  className="mt-4 w-full bg-[#FFD700] text-[#8B4513] hover:bg-[#FFD700]/90 hover:shadow-lg transition-all"
+                >
+                  Add to Contact Form
+                </Button>
               </div>
             </DialogContent>
           </Dialog>

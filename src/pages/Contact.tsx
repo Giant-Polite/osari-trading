@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +16,15 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Initialize message with cart products
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
+    if (cart.length > 0) {
+      const message = `Interested in: ${cart.join(", ")}`;
+      setFormData((prev) => ({ ...prev, message }));
+    }
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -29,14 +38,14 @@ const Contact = () => {
 
     try {
       await emailjs.send(
-        "service_lbav6nz", // Your Service ID
-        "template_kk7hr85", // Your Template ID
+        "service_lbav6nz",
+        "template_kk7hr85",
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
         },
-        "4A16-a1r2QNyqkRSx" // Your Public Key
+        "4A16-a1r2QNyqkRSx"
       );
 
       toast({
@@ -44,11 +53,13 @@ const Contact = () => {
         description: "Thank you for contacting us. We'll get back to you promptly.",
       });
 
+      // Clear form and cart
       setFormData({
         name: "",
         email: "",
         message: "",
       });
+      localStorage.removeItem("cartProducts");
     } catch (error) {
       toast({
         title: "Error",
@@ -63,18 +74,16 @@ const Contact = () => {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12">
-        {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl text-muted-foreground">
-            We're here to help! Whether you're a restaurant, grocery store, or local business, 
-            reach out for inquiries, wholesale orders, or general questions. Fill out the form below, 
+            We're here to help! Whether you're a restaurant, grocery store, or local business,
+            reach out for inquiries, wholesale orders, or general questions. Fill out the form below,
             and we'll get back to you promptly.
           </p>
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact Form */}
           <div className="order-2 lg:order-1">
             <form
               onSubmit={handleSubmit}
@@ -93,7 +102,6 @@ const Contact = () => {
                     placeholder="Your full name"
                   />
                 </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="email">Email *</Label>
                   <Input
@@ -106,7 +114,6 @@ const Contact = () => {
                     placeholder="your.email@example.com"
                   />
                 </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="message">Message *</Label>
                   <Textarea
@@ -119,7 +126,6 @@ const Contact = () => {
                     placeholder="Tell us about your inquiry, wholesale needs, or questions..."
                   />
                 </div>
-
                 <Button
                   type="submit"
                   size="lg"
@@ -131,14 +137,11 @@ const Contact = () => {
               </div>
             </form>
           </div>
-
-          {/* Contact Information */}
           <div className="order-1 lg:order-2 space-y-6">
             <div className="bg-card rounded-lg p-8 shadow-md animate-fade-in">
               <p className="text-lg mb-8 leading-relaxed text-muted-foreground">
                 Proudly family-operated since 2025, serving Minneapolis and the Midwest with dedication and excellence.
               </p>
-
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
@@ -153,7 +156,6 @@ const Contact = () => {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
                     <Phone className="h-6 w-6 text-[#8A9A5B]" />
@@ -167,7 +169,6 @@ const Contact = () => {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
                     <Clock className="h-6 w-6 text-[#8A9A5B]" />
