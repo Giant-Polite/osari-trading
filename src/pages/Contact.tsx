@@ -136,7 +136,7 @@ const Contact = () => {
           <div className="order-1 lg:order-2 space-y-6">
             <div className="bg-card rounded-lg p-8 shadow-md animate-fade-in">
               <p className="text-lg mb-8 leading-relaxed text-muted-foreground">
-                Proudly family-operated since 2025, serving Minneapolis and the Midwest with dedication and excellence.
+                Family-owned and operated, committed to serving Minneapolis and the Midwest with dedication and excellence.
               </p>
 
               <div className="space-y-6">
