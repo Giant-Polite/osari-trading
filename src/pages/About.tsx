@@ -111,15 +111,15 @@ const About = () => {
   // === Data ===
   const stats = [
     { label: "Generations of Experience", value: "3+", icon: Award },
-    { label: "Products Supplied", value: "500+", icon: Wheat },
+    { label: "Products Supplied", value: "5000+", icon: Wheat },
     { label: "Trusted Clients", value: "100+", icon: Users },
     { label: "Minneapolis & Midwest", value: "MN", icon: Wine },
   ];
 
   const highlights = [
-    { icon: "🌾", text: "Premium Grains & Raw Foods" },
+    { icon: "🌾", text: "Premium Grains & Raw Foods at Wholesale Scale" },
+    { icon: "🌶️", text: "From Farm to Flavor, Wholesale Spices Done Right" },
     { icon: "🥤", text: "Beverages at Wholesale Scale" },
-    { icon: "🕌", text: "Certified Halal Products You Can Trust" },
   ];
 
   const values = [
@@ -190,7 +190,7 @@ const About = () => {
             transition={{ delay: 0.3 }}
           >
             <Sparkles className="w-4 h-4 mr-2 text-primary" />
-            Trusted Since Three Generations
+            Creating the Future of Trusted Trade
           </motion.div>
 
           <motion.h1

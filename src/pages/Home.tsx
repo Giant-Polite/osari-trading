@@ -134,7 +134,7 @@ const Home = () => {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="py-16 bg-yellow-400 text-deepbrown text-center">
+      <section className="py-6 bg-yellow-400 text-deepbrown text-center">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Get Started?
