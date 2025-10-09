@@ -9,6 +9,7 @@ import Products from "./pages/Products";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop"; // ✅ Add this
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop /> {/* ✅ This ensures every route starts at the top */}
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -25,7 +27,6 @@ const App = () => (
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
           </Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -41,7 +41,7 @@ const Home = () => {
             Premium consumer packaged goods including:
           </p>
           <div className="mb-8 h-8 flex items-center justify-center animate-fade-in">
-            <TypewriterText />
+            <TypewriterText speed={0} />
           </div>
           <Button
             asChild

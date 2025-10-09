@@ -2,97 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* ===========================================================
+   🌾 Osari Trading Global Styles
+   =========================================================== */
 @layer base {
   :root {
-    /* Osari Trading Brand Colors - Gold, Deep Brown, Olive Green */
     --background: 33 52% 89%;
     --foreground: 16 25% 19%;
-
     --card: 0 0% 100%;
     --card-foreground: 16 25% 19%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 16 25% 19%;
-
     --primary: 45 62% 52%;
     --primary-foreground: 16 25% 19%;
-
     --secondary: 82 39% 30%;
     --secondary-foreground: 33 52% 89%;
-
     --muted: 33 35% 75%;
     --muted-foreground: 16 25% 40%;
-
     --accent: 25 45% 13%;
     --accent-foreground: 33 52% 89%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 33 35% 80%;
     --input: 33 35% 85%;
     --ring: 45 62% 52%;
-
     --radius: 0.5rem;
 
-    /* Hero gradient */
-  /* Hero gradient – now soft white */
-  --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(33 52% 89%) 50%, hsl(0 0% 100%) 100%);
+    /* ✨ Custom Gradients */
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(0 0% 100%) 0%,
+      hsl(33 52% 89%) 50%,
+      hsl(0 0% 100%) 100%
+    );
 
-    
-    /* Hero background */
-    
-    
-    /* Card hover effect */
     --shadow-gold: 0 10px 30px -10px hsl(45 62% 52% / 0.3);
   }
 
   .dark {
     --background: 25 45% 13%;
     --foreground: 33 52% 89%;
-
     --card: 16 25% 19%;
     --card-foreground: 33 52% 89%;
-
     --popover: 16 25% 19%;
     --popover-foreground: 33 52% 89%;
-
     --primary: 45 62% 52%;
     --primary-foreground: 16 25% 19%;
-
     --secondary: 82 39% 30%;
     --secondary-foreground: 33 52% 89%;
-
     --muted: 16 25% 25%;
     --muted-foreground: 33 35% 65%;
-
     --accent: 82 39% 30%;
     --accent-foreground: 33 52% 89%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 16 25% 25%;
     --input: 16 25% 25%;
     --ring: 45 62% 52%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    perspective: 1200px;
   }
 }
 
-@keyframes scroll-left-fast {
+/* ===========================================================
+   ⚡️ Animations & Interactions
+   =========================================================== */
+
+/* Smooth horizontal scroll */
+@keyframes scroll-left {
   0% {
     transform: translateX(0);
   }
@@ -100,22 +84,142 @@ All colors MUST be HSL.
     transform: translateX(-50%);
   }
 }
-
-.animate-scroll-left-fast {
-  animation: scroll-left-fast 20s linear infinite; /* ⏩ twice as fast as normal */
+.animate-scroll-left {
+  animation: scroll-left 50s linear infinite;
 }
 
-@keyframes scroll-left-seamless {
+/* Fade-up entrance */
+@keyframes fade-up {
   0% {
-    transform: translateX(0);
+    opacity: 0;
+    transform: translateY(25px);
   }
   100% {
-    transform: translateX(-50%);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}
+
+/* Pulse-slow for open/closed badge */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 2.5s infinite ease-in-out;
+}
+
+/* Floating particle motion */
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-40px) scale(1.05);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+.animate-float-particle {
+  animation: float-particle 10s ease-in-out infinite;
+}
+
+/* Gradient shift */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+/* ===========================================================
+   🧭 3D Tilt + Glow Interactions
+   =========================================================== */
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.tilt-card:hover {
+  transform: rotateX(5deg) rotateY(5deg) scale(1.03);
+  box-shadow: 0 15px 35px -10px hsl(var(--primary) / 0.4);
+}
+
+/* On mobile, enable touch-tilt effect */
+@media (hover: none) and (pointer: coarse) {
+  .tilt-card:active {
+    transform: rotateX(5deg) rotateY(-5deg) scale(1.02);
+    box-shadow: 0 15px 30px -10px hsl(var(--primary) / 0.5);
   }
 }
 
-.animate-scroll-left-seamless {
-  display: flex;
-  width: max-content;
-  animation: scroll-left-seamless 50s linear infinite;
+/* Smooth touch transitions */
+.tilt-touch {
+  transition: transform 0.15s ease-out;
+}
+
+/* ===========================================================
+   🌟 Hover Effects
+   =========================================================== */
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 8px 20px -5px hsl(var(--primary) / 0.4);
+}
+
+/* ===========================================================
+   📱 Responsive Fixes
+   =========================================================== */
+@media (max-width: 768px) {
+  .animate-float-particle {
+    display: none;
+  }
+}
+
+/* ===========================================================
+   🟢 Live Status Badge
+   =========================================================== */
+.status-badge {
+  @apply inline-flex items-center justify-center px-3 py-1 rounded-full text-sm font-medium;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+}
+
+.status-open {
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  color: white;
+  animation: pulse-slow 2s infinite ease-in-out;
+}
+
+.status-closed {
+  background: linear-gradient(90deg, #f87171, #ef4444);
+  color: white;
+  opacity: 0.9;
 }
