@@ -29,10 +29,21 @@ const About = () => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   useEffect(() => {
+    console.log("About page mounted");
+
+    // Disable auto-scroll on mobile
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      setAutoScrollActive(false);
+      return;
+    }
+
     // Always start from the top of the page
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    window.scrollTo({ top: 0, behavior: "instant" });
 
     if (!autoScrollActive) return;
+
+    let animationFrameId: number | null = null;
 
     const scrollToRef = (
       ref: React.RefObject<HTMLElement>,
@@ -41,8 +52,7 @@ const About = () => {
     ) => {
       if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
-      const targetY =
-        rect.top + window.scrollY + rect.height * offsetRatio - 60;
+      const targetY = rect.top + window.scrollY + rect.height * offsetRatio - 60;
       const startY = window.scrollY;
       const distance = targetY - startY;
       let startTime: number | null = null;
@@ -56,16 +66,17 @@ const About = () => {
         const progress = Math.min(elapsed / duration, 1);
         const eased = easeInOutQuad(progress);
         window.scrollTo(0, startY + distance * eased);
-        if (progress < 1 && autoScrollActive) requestAnimationFrame(step);
+        if (progress < 1 && autoScrollActive) {
+          animationFrameId = requestAnimationFrame(step);
+        }
       };
 
-      requestAnimationFrame(step);
+      animationFrameId = requestAnimationFrame(step);
     };
 
     const sequence = async () => {
       const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
-      const isMobile = window.innerWidth < 768;
-      const speed = isMobile ? 1.4 : 1;
+      const speed = 1;
 
       if (!autoScrollActive) return;
       setShowIndicator(true);
@@ -89,22 +100,26 @@ const About = () => {
       scrollToRef(valuesRef, 4000 * speed, 0.25);
       await wait(3000 * speed);
 
-      // ✅ Return to top after one full sequence
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     sequence();
 
-    // Detect manual user scroll/touch/keys to cancel auto-scroll
     const stopScroll = () => setAutoScrollActive(false);
+
     window.addEventListener("wheel", stopScroll, { passive: true });
     window.addEventListener("touchstart", stopScroll, { passive: true });
     window.addEventListener("keydown", stopScroll);
 
     return () => {
+      console.log("About page unmounted");
       window.removeEventListener("wheel", stopScroll);
       window.removeEventListener("touchstart", stopScroll);
       window.removeEventListener("keydown", stopScroll);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      setAutoScrollActive(false);
     };
   }, [autoScrollActive]);
 
@@ -143,7 +158,7 @@ const About = () => {
     },
   ];
 
-  // === Variants (type-safe, no errors) ===
+  // === Variants ===
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {

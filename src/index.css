@@ -13,13 +13,13 @@
     --card-foreground: 16 25% 19%;
     --popover: 0 0% 100%;
     --popover-foreground: 16 25% 19%;
-    --primary: 45 62% 52%;
+    --primary: 45 62% 52%; /* Matches #FFD700 */
     --primary-foreground: 16 25% 19%;
     --secondary: 82 39% 30%;
     --secondary-foreground: 33 52% 89%;
     --muted: 33 35% 75%;
     --muted-foreground: 16 25% 40%;
-    --accent: 25 45% 13%;
+    --accent: 25 45% 13%; /* Matches #8B4513 */
     --accent-foreground: 33 52% 89%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -27,15 +27,28 @@
     --input: 33 35% 85%;
     --ring: 45 62% 52%;
     --radius: 0.5rem;
-
-    /* ✨ Custom Gradients */
+    /* Custom Colors for Osari Trading */
+    --chart-1: 45 62% 52%; /* Matches #FFD700 for toasts, active category */
+    --chart-2: 140 48% 48%; /* Green for Halal Certified badge */
+    --chart-4: 33 52% 60%; /* Amber for hover states, particles */
+    /* Custom Gradients */
     --gradient-hero: linear-gradient(
       135deg,
       hsl(0 0% 100%) 0%,
       hsl(33 52% 89%) 50%,
       hsl(0 0% 100%) 100%
     );
-
+    --gradient-gold: linear-gradient(
+      90deg,
+      hsl(25 45% 13%) 0%, /* #8B4513 */
+      hsl(33 52% 60%) 50%, /* #C47F39 */
+      hsl(45 62% 52%) 100% /* #FFD700 */
+    );
+    --gradient-button: linear-gradient(
+      90deg,
+      hsl(33 100% 45%) 0%, /* amber-600 */
+      hsl(24 100% 50%) 100% /* orange-600 */
+    );
     --shadow-gold: 0 10px 30px -10px hsl(45 62% 52% / 0.3);
   }
 
@@ -59,6 +72,9 @@
     --border: 16 25% 25%;
     --input: 16 25% 25%;
     --ring: 45 62% 52%;
+    --chart-1: 45 62% 52%;
+    --chart-2: 140 48% 48%;
+    --chart-4: 33 52% 60%;
   }
 
   * {
@@ -154,6 +170,28 @@
   animation: gradient-shift 6s ease infinite;
 }
 
+/* Toast glow effect */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+.animate-toast-glow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Sticky navbar transitions */
+.sticky-navbar {
+  transition: all 0.3s ease;
+}
+.sticky-navbar.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
 /* ===========================================================
    🧭 3D Tilt + Glow Interactions
    =========================================================== */
@@ -194,6 +232,47 @@
 }
 
 /* ===========================================================
+   🟪 Glassmorphism Effects
+   =========================================================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ===========================================================
+   🖼️ Gradient Text
+   =========================================================== */
+
+.gradient-text-gold {
+  background: var(--gradient-gold);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ===========================================================
+   📜 Scrollbar Hide
+   =========================================================== */
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* ===========================================================
    📱 Responsive Fixes
    =========================================================== */
 @media (max-width: 768px) {
@@ -213,13 +292,13 @@
 }
 
 .status-open {
-  background: linear-gradient(90deg, #4ade80, #22c55e);
-  color: white;
+  background: linear-gradient(90deg, hsl(var(--chart-2)), hsl(var(--chart-2)) 80%);
+  color: hsl(var(--primary-foreground));
   animation: pulse-slow 2s infinite ease-in-out;
 }
 
 .status-closed {
   background: linear-gradient(90deg, #f87171, #ef4444);
-  color: white;
+  color: hsl(var(--primary-foreground));
   opacity: 0.9;
 }

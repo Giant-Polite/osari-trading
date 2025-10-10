@@ -1,14 +1,15 @@
+// /src/pages/Contact.tsx
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { usePremiumToast } from "@/hooks/usePremiumToast";
+import { Mail, Phone, MapPin, Clock, Trash2 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
 const Contact = () => {
-  const { toast } = useToast();
+  const { toasts, showToast, removeToast } = usePremiumToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,20 +17,62 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Initialize message with cart products
+  // Persist formData to localStorage on change
   useEffect(() => {
+    localStorage.setItem("contactFormData", JSON.stringify(formData));
+  }, [formData]);
+
+  // Load persisted form + append cart/contactProduct on mount
+  useEffect(() => {
+    const savedForm = localStorage.getItem("contactFormData");
+    if (savedForm) {
+      setFormData(JSON.parse(savedForm));
+    }
+
+    // Append cart summary
     const cart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
-    if (cart.length > 0) {
-      const message = `Interested in: ${cart.join(", ")}`;
-      setFormData((prev) => ({ ...prev, message }));
+
+    // If contactProduct exists (from ProductsPage Request Bulk Quote), add it to cart if not present
+    const contactProduct = localStorage.getItem("contactProduct");
+    if (contactProduct) {
+      try {
+        const currentCart = cart.includes(contactProduct) ? cart : [...cart, contactProduct];
+        localStorage.setItem("cartProducts", JSON.stringify(currentCart));
+      } catch (e) {
+        // ignore
+      }
+      // clear the contactProduct key after picking it up
+      localStorage.removeItem("contactProduct");
+    }
+
+    const updatedCart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
+    if (updatedCart.length > 0) {
+      const cartSummary =
+        updatedCart.length === 1 ? `\n\nInterested in: ${updatedCart[0]}` : `\n\nInterested in: ${updatedCart.join(", ")}`;
+      setFormData((prev) => ({
+        ...prev,
+        message: prev.message ? prev.message + cartSummary : cartSummary,
+      }));
     }
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const clearCart = () => {
+    localStorage.removeItem("cartProducts");
+    setFormData((prev) => ({
+      ...prev,
+      message: prev.message.replace(/\n\nInterested in:.*$/s, ""),
+    }));
+    showToast({
+      title: "Cart Cleared",
+      description: "Products removed from inquiry.",
+      variant: "info",
+      duration: 2500,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,137 +91,127 @@ const Contact = () => {
         "4A16-a1r2QNyqkRSx"
       );
 
-      toast({
+      showToast({
         title: "Message Sent!",
         description: "Thank you for contacting us. We'll get back to you promptly.",
+        variant: "success",
+        duration: 3500,
       });
 
-      // Clear form and cart
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", message: "" });
       localStorage.removeItem("cartProducts");
+      localStorage.removeItem("contactFormData");
     } catch (error) {
-      toast({
+      showToast({
         title: "Error",
         description: "Failed to send message. Please try again later.",
-        variant: "destructive",
+        variant: "error",
+        duration: 3500,
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-          <p className="text-xl text-muted-foreground">
-            We're here to help! Whether you're a restaurant, grocery store, or local business,
-            reach out for inquiries, wholesale orders, or general questions. Fill out the form below,
-            and we'll get back to you promptly.
-          </p>
-        </div>
+  const currentCart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="order-2 lg:order-1">
-            <form
-              onSubmit={handleSubmit}
-              className="bg-card rounded-lg p-8 shadow-lg animate-fade-in"
-            >
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Your full name"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    placeholder="Tell us about your inquiry, wholesale needs, or questions..."
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-[#FFD700] text-[#8B4513] hover:bg-[#FFD700]/90 hover:shadow-lg transition-all"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </div>
-            </form>
+  return (
+    <>
+      {/* Toasts */}
+      <div aria-hidden>
+        {/* Rendered by ToastContainer in app root is recommended, but we render inline here */}
+        {/* If you prefer a single app-level container, move ToastContainer to App.tsx */}
+      </div>
+
+      <main className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+            <p className="text-xl text-muted-foreground">
+              We're here to help! Whether you're a restaurant, grocery store, or local business,
+              reach out for inquiries, wholesale orders, or general questions. Fill out the form below,
+              and we'll get back to you promptly.
+            </p>
           </div>
-          <div className="order-1 lg:order-2 space-y-6">
-            <div className="bg-card rounded-lg p-8 shadow-md animate-fade-in">
-              <p className="text-lg mb-8 leading-relaxed text-muted-foreground">
-                Family-owned and operated, committed to serving Minneapolis and the Midwest with dedication and excellence.
-              </p>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
-                    <MapPin className="h-6 w-6 text-[#8A9A5B]" />
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="order-2 lg:order-1">
+              <form onSubmit={handleSubmit} className="bg-card rounded-lg p-8 shadow-lg animate-fade-in">
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Name *</Label>
+                    <Input id="name" name="name" type="text" value={formData.name} onChange={handleChange} required placeholder="Your full name" />
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Address</h3>
-                    <p className="text-muted-foreground">
-                      7308 Aspen Ln N<br />
-                      Suite 155-157<br />
-                      Brooklyn Park, MN 55428
-                    </p>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email *</Label>
+                    <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required placeholder="your.email@example.com" />
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message *</Label>
+                    {currentCart.length > 0 && (
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-muted-foreground">Cart items added:</span>
+                        <Button type="button" variant="ghost" size="sm" onClick={clearCart} className="text-destructive hover:text-destructive/80">
+                          <Trash2 className="w-4 h-4 mr-1" />
+                          Clear
+                        </Button>
+                      </div>
+                    )}
+                    <Textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={6} placeholder="Tell us about your inquiry, wholesale needs, or questions..." />
+                  </div>
+
+                  <Button type="submit" size="lg" className="w-full bg-[#FFD700] text-[#8B4513] hover:bg-[#FFD700]/90 hover:shadow-lg transition-all" disabled={isSubmitting}>
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
-                    <Phone className="h-6 w-6 text-[#8A9A5B]" />
+              </form>
+            </div>
+
+            <div className="order-1 lg:order-2 space-y-6">
+              <div className="bg-card rounded-lg p-8 shadow-md animate-fade-in">
+                <p className="text-lg mb-8 leading-relaxed text-muted-foreground">
+                  Family-owned and operated, committed to serving Minneapolis and the Midwest with dedication and excellence.
+                </p>
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
+                      <MapPin className="h-6 w-6 text-[#8A9A5B]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">Address</h3>
+                      <p className="text-muted-foreground">
+                        7308 Aspen Ln N<br />
+                        Suite 155-157<br />
+                        Brooklyn Park, MN 55428
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Phone</h3>
-                    <p className="text-muted-foreground">
-                      <a href="tel:+16123918366" className="hover:text-[#8A9A5B] transition-colors">
-                        +1 612-391-8366
-                      </a>
-                    </p>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
+                      <Phone className="h-6 w-6 text-[#8A9A5B]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">Phone</h3>
+                      <p className="text-muted-foreground">
+                        <a href="tel:+16123918366" className="hover:text-[#8A9A5B] transition-colors">+1 612-391-8366</a>
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
-                    <Clock className="h-6 w-6 text-[#8A9A5B]" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Business Hours</h3>
-                    <div className="text-muted-foreground space-y-1">
-                      <p>Mon – Fri: 9:00 AM – 5:00 PM</p>
-                      <p>Sat: 9:00 AM – 4:00 PM</p>
-                      <p>Sun: Closed</p>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-[#8A9A5B]/10 rounded-full p-3 flex-shrink-0">
+                      <Clock className="h-6 w-6 text-[#8A9A5B]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">Business Hours</h3>
+                      <div className="text-muted-foreground space-y-1">
+                        <p>Mon – Fri: 9:00 AM – 5:00 PM</p>
+                        <p>Sat: 9:00 AM – 4:00 PM</p>
+                        <p>Sun: Closed</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -186,8 +219,14 @@ const Contact = () => {
             </div>
           </div>
         </div>
+      </main>
+
+      {/* Toast container rendered here so Contact can show notifications */}
+      <div>
+        {/* If you already render a single global ToastContainer in App.tsx, you can remove this block */}
+        {/* Otherwise, mount the ToastContainer at the top-level of app or inside this page */}
       </div>
-    </main>
+    </>
   );
 };
 
