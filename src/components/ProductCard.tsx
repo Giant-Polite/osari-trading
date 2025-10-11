@@ -26,11 +26,11 @@ const ProductCard = ({ product, onClick }: ProductCardProps) => {
       "
     >
       {/* Image */}
-      <div className="relative overflow-hidden aspect-square rounded-t-xl">
+      <div className="relative overflow-hidden aspect-square rounded-t-xl flex items-center justify-center bg-gray-50">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
         {!product.inStock && (

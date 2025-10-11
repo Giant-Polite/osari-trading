@@ -217,15 +217,17 @@ const ProductsPage = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100"
+                        className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100 group"
                       >
-                        <div className="relative overflow-hidden aspect-square">
+                        {/* Updated image container */}
+                        <div className="relative overflow-hidden aspect-square bg-gray-50 flex items-center justify-center">
                           <img
                             src={product.image}
                             alt={product.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
                           />
                         </div>
+
                         <div className="p-5">
                           <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-1">
                             {product.name}

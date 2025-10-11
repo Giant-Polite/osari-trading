@@ -38,7 +38,7 @@ const Home = () => {
             OSARI TRADING
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto animate-fade-in">
-            Premium consumer packaged goods including:
+            Are You Looking For Premium Consumer Packaged Goods Including:
           </p>
           <div className="mb-8 h-8 flex items-center justify-center animate-fade-in">
             <TypewriterText speed={0} />

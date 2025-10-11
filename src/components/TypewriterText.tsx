@@ -11,15 +11,17 @@ const TypewriterText: FC<TypewriterTextProps> = ({ speed }) =>{
   return (
     <TypeAnimation
       sequence={[
-        "Grains", 2000,  // wait 2s after typing
-        "Pasta", 2000,
-        "Spices", 2000,
-        "Snacks", 2000,
-        "Tea", 2000,
-        "Coffee", 2000,
-        "Beverages", 2000,
-        "Dates", 2000,
-        "Sauces & Dips", 2000,
+        "Grains?", 2000,  // wait 2s after typing
+        "Pasta?", 2000,
+        "Cooking Oils?", 2000,
+        "Spices?", 2000,
+        "Snacks?", 2000,
+        "Tea?", 2000,
+        "Coffee?", 2000,
+        "Pocas Products?", 2000,
+        "OKF Drinks?", 2000,
+        "Dates?", 2000,
+        "Sauces & Dips?", 2000,
       ]}
       wrapper="span"
       repeat={Infinity}

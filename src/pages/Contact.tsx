@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { usePremiumToast } from "@/hooks/usePremiumToast";
+import { ToastContainer } from "@/components/PremiumToast";
 import { Mail, Phone, MapPin, Clock, Trash2 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
@@ -25,30 +26,23 @@ const Contact = () => {
   // Load persisted form + append cart/contactProduct on mount
   useEffect(() => {
     const savedForm = localStorage.getItem("contactFormData");
-    if (savedForm) {
-      setFormData(JSON.parse(savedForm));
-    }
+    if (savedForm) setFormData(JSON.parse(savedForm));
 
-    // Append cart summary
     const cart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
-
-    // If contactProduct exists (from ProductsPage Request Bulk Quote), add it to cart if not present
     const contactProduct = localStorage.getItem("contactProduct");
+
     if (contactProduct) {
-      try {
-        const currentCart = cart.includes(contactProduct) ? cart : [...cart, contactProduct];
-        localStorage.setItem("cartProducts", JSON.stringify(currentCart));
-      } catch (e) {
-        // ignore
-      }
-      // clear the contactProduct key after picking it up
+      const currentCart = cart.includes(contactProduct) ? cart : [...cart, contactProduct];
+      localStorage.setItem("cartProducts", JSON.stringify(currentCart));
       localStorage.removeItem("contactProduct");
     }
 
     const updatedCart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
     if (updatedCart.length > 0) {
       const cartSummary =
-        updatedCart.length === 1 ? `\n\nInterested in: ${updatedCart[0]}` : `\n\nInterested in: ${updatedCart.join(", ")}`;
+        updatedCart.length === 1
+          ? `\n\nInterested in: ${updatedCart[0]}`
+          : `\n\nInterested in: ${updatedCart.join(", ")}`;
       setFormData((prev) => ({
         ...prev,
         message: prev.message ? prev.message + cartSummary : cartSummary,
@@ -117,11 +111,8 @@ const Contact = () => {
 
   return (
     <>
-      {/* Toasts */}
-      <div aria-hidden>
-        {/* Rendered by ToastContainer in app root is recommended, but we render inline here */}
-        {/* If you prefer a single app-level container, move ToastContainer to App.tsx */}
-      </div>
+      {/* Toast container */}
+      <ToastContainer toasts={toasts} onClose={removeToast} />
 
       <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-12">
@@ -140,12 +131,28 @@ const Contact = () => {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">Name *</Label>
-                    <Input id="name" name="name" type="text" value={formData.name} onChange={handleChange} required placeholder="Your full name" />
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Your full name"
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email">Email *</Label>
-                    <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required placeholder="your.email@example.com" />
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="your.email@example.com"
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -153,16 +160,35 @@ const Contact = () => {
                     {currentCart.length > 0 && (
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-sm text-muted-foreground">Cart items added:</span>
-                        <Button type="button" variant="ghost" size="sm" onClick={clearCart} className="text-destructive hover:text-destructive/80">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearCart}
+                          className="text-destructive hover:text-destructive/80"
+                        >
                           <Trash2 className="w-4 h-4 mr-1" />
                           Clear
                         </Button>
                       </div>
                     )}
-                    <Textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={6} placeholder="Tell us about your inquiry, wholesale needs, or questions..." />
+                    <Textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={6}
+                      placeholder="Tell us about your inquiry, wholesale needs, or questions..."
+                    />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full bg-[#FFD700] text-[#8B4513] hover:bg-[#FFD700]/90 hover:shadow-lg transition-all" disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-[#FFD700] text-[#8B4513] hover:bg-[#FFD700]/90 hover:shadow-lg transition-all"
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </div>
@@ -196,7 +222,9 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold text-lg mb-2">Phone</h3>
                       <p className="text-muted-foreground">
-                        <a href="tel:+16123918366" className="hover:text-[#8A9A5B] transition-colors">+1 612-391-8366</a>
+                        <a href="tel:+16123918366" className="hover:text-[#8A9A5B] transition-colors">
+                          +1 612-391-8366
+                        </a>
                       </p>
                     </div>
                   </div>
@@ -220,12 +248,6 @@ const Contact = () => {
           </div>
         </div>
       </main>
-
-      {/* Toast container rendered here so Contact can show notifications */}
-      <div>
-        {/* If you already render a single global ToastContainer in App.tsx, you can remove this block */}
-        {/* Otherwise, mount the ToastContainer at the top-level of app or inside this page */}
-      </div>
     </>
   );
 };

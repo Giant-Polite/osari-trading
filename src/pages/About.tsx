@@ -192,7 +192,7 @@ const About = () => {
       {/* === HERO === */}
       <section ref={heroRef} className="relative overflow-hidden">
         <motion.img
-          src="/warehouse.jpg"
+          src="/warehouse.webp"
           alt="Osari Trading LLC Warehouse"
           className="w-full h-[600px] object-cover"
           style={{ y }}

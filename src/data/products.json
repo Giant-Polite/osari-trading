@@ -1,410 +1,758 @@
 [
   {
-    "id": "cooking-oils-1",
-    "name": "Banadir Sesame Oil Small",
+    "id": "cooking-essential-oils-1",
+    "name": "Butcher Boy Pure Corn Oil",
     "category": "cooking-essential-oils",
-    "image": "/images/cooking-essential-oils/Banadir_Sesame_Oil_Small_c32f726d-f918-4ade-8bad-87b2d0a2f659.jpg",
-    "description": "High-quality sesame oil perfect for cooking and seasoning.",
+    "image": "/images/cooking-essential-oils/Butcher_Boy_Pure_Corn_Oil.webp",
+    "description": "Pure corn oil perfect for frying and baking.",
     "inStock": true
   },
   {
-    "id": "cooking-oils-2",
+    "id": "cooking-essential-oils-2",
     "name": "Extra Virgin Olive Oil 1 Liter",
     "category": "cooking-essential-oils",
-    "image": "/images/cooking-essential-oils/Extra_virgin_olive_oil_1_liter.jpg",
-    "description": "Premium extra virgin olive oil for healthy cooking and salads.",
+    "image": "/images/cooking-essential-oils/Extra_virgin_olive_oil_1_liter.webp",
+    "description": "Premium extra virgin olive oil for salads and cooking.",
+    "inStock": true
+  },
+  {
+    "id": "cooking-essential-oils-3",
+    "name": "Banadir Sesame Oil Small",
+    "category": "cooking-essential-oils",
+    "image": "/images/cooking-essential-oils/Banadir_Sesame_Oil_Small_c32f726d-f918-4ade-8bad-87b2d0a2f659.webp",
+    "description": "Aromatic sesame oil for authentic Asian and African dishes.",
     "inStock": true
   },
   {
     "id": "dates-1",
-    "name": "Ajwa Al Madina Orchid Dates",
+    "name": "Aldayfe Dates",
     "category": "dates",
-    "image": "/images/dates/Ajwa_Al_Madina_Orchid_Dates.jpg",
-    "description": "Soft, sweet, and nutritious Ajwa dates from Al Madina.",
+    "image": "/images/dates/Aldayfe_Dates.webp",
+    "description": "Sweet and flavorful Aldayfe dates for everyday enjoyment.",
     "inStock": true
   },
   {
     "id": "dates-2",
     "name": "Al Madina Dates 1",
     "category": "dates",
-    "image": "/images/dates/Al_Madina_Dates_1.jpg",
-    "description": "Premium Al Madina dates, perfect for snacking or baking.",
+    "image": "/images/dates/Al_Madina_Dates_1.webp",
+    "description": "Premium Al Madina dates, soft and naturally sweet.",
     "inStock": true
   },
   {
     "id": "dates-3",
-    "name": "Aldayfe Dates",
+    "name": "Ajwa Al Madina Orchid Dates",
     "category": "dates",
-    "image": "/images/dates/Aldayfe_Dates.jpg",
-    "description": "Sweet and flavorful Aldayfe dates for everyday consumption.",
+    "image": "/images/dates/Ajwa_Al_Madina_Orchid_Dates.webp",
+    "description": "Luxurious Ajwa dates from Al Madina with rich flavor.",
     "inStock": true
   },
+
   {
     "id": "drink-desserts-1",
-    "name": "Abu Walad Sandwich Biscuits",
+    "name": "Shani Bottle",
     "category": "drink-desserts",
-    "image": "/images/drink-desserts/Abu_Walad_Sandwhich_Biscuits.jpg",
-    "description": "Crispy and tasty sandwich biscuits, ideal with tea or coffee.",
+    "image": "/images/drink-desserts/Shani_Bottle.webp",
+    "description": "Classic Shani soft drink in bottle packaging.",
     "inStock": true
   },
   {
     "id": "drink-desserts-2",
-    "name": "Shani Bottle",
+    "name": "Vimto Fruit Syrup 710ml",
     "category": "drink-desserts",
-    "image": "/images/drink-desserts/Shani_Bottle.jpg",
-    "description": "Refreshing Shani soft drink in a convenient bottle.",
+    "image": "/images/drink-desserts/VimtoFruitSyrup710ml.webp",
+    "description": "Sweet fruit syrup concentrate for refreshing drinks.",
     "inStock": true
   },
   {
     "id": "drink-desserts-3",
-    "name": "Shani Can",
+    "name": "Core Power Chocolate Shake",
     "category": "drink-desserts",
-    "image": "/images/drink-desserts/Shani_Can.jpg",
-    "description": "Classic Shani soft drink in a can, perfect for on-the-go.",
+    "image": "/images/drink-desserts/Core_Power_chocolate_shake.webp",
+    "description": "Protein-packed chocolate milk shake for recovery.",
     "inStock": true
   },
   {
     "id": "drink-desserts-4",
     "name": "Sparkling Vimto Can 330ml",
     "category": "drink-desserts",
-    "image": "/images/drink-desserts/SparklingVimtoCan_330ml.jpg",
-    "description": "Sparkling Vimto drink in a convenient 330ml can.",
+    "image": "/images/drink-desserts/SparklingVimtoCan_330ml.webp",
+    "description": "Carbonated Vimto drink in a convenient can.",
     "inStock": true
   },
   {
     "id": "drink-desserts-5",
-    "name": "Sparkling Vimto Fruit Flavor Drink 500ml",
+    "name": "Abu Walad Sandwich Biscuits",
     "category": "drink-desserts",
-    "image": "/images/drink-desserts/SparklingVimtoFruitFlavorDrink_500ml_PlasticBottle.jpg",
-    "description": "Delicious fruit-flavored Vimto sparkling beverage, 500ml.",
+    "image": "/images/drink-desserts/Abu_Walad_Sandwhich_Biscuits.webp",
+    "description": "Cream-filled sandwich biscuits, a sweet treat.",
     "inStock": true
   },
   {
     "id": "drink-desserts-6",
-    "name": "Vimto Fruit Syrup 710ml",
+    "name": "Core Power Vanilla Shake",
     "category": "drink-desserts",
-    "image": "/images/drink-desserts/VimtoFruitSyrup710ml.jpg",
-    "description": "Sweet Vimto fruit syrup, perfect for making refreshing drinks.",
+    "image": "/images/drink-desserts/core_power_vanilla_shake.jpeg",
+    "description": "Smooth vanilla-flavored protein shake for energy.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-7",
+    "name": "Core Power Strawberry Banana",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/Core_Power_Strawberry_Banana.webp",
+    "description": "Strawberry banana protein shake for balanced nutrition.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-8",
+    "name": "VOSS Natural Spring Water",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/VOSS_Natural_Spring_Water.webp",
+    "description": "Premium natural spring water in sleek glass bottle.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-9",
+    "name": "Shani Can",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/Shani_Can.webp",
+    "description": "Refreshing Shani beverage in convenient can.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-10",
+    "name": "Sparkling Vimto Fruit Flavor Drink 500ml",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/SparklingVimtoFruitFlavorDrink_500ml_PlasticBottle.webp",
+    "description": "Sparkling Vimto fruit drink in 500ml plastic bottle.",
+    "inStock": true
+  },
+  {
+    "id": "drink-desserts-11",
+    "name": "Foco Roasted Coconut Juice",
+    "category": "drink-desserts",
+    "image": "/images/drink-desserts/Foco_Roasted_Coconut_Juice.webp",
+    "description": "Smooth coconut juice with roasted aroma.",
     "inStock": true
   },
   {
     "id": "grains-sides-1",
-    "name": "Aahubarah Basmati Sela Rice",
+    "name": "Pasta Lori Puglia Spaghettini 2 Pasta",
     "category": "grains-sides",
-    "image": "/images/grains-sides/AahubarahBasmatiSelaRice.jpg",
-    "description": "Premium long-grain Basmati rice, ideal for everyday meals.",
+    "image": "/images/grains-sides/Pasta_Lori_Puglia_Spaghettini_2_Pasta.webp",
+    "description": "Fine Italian spaghettini pasta for classic dishes.",
     "inStock": true
   },
   {
     "id": "grains-sides-2",
-    "name": "Asli Adzuku Beans Abuulo 2lbs",
+    "name": "Pasta ZARA Macaroni Elbows",
     "category": "grains-sides",
-    "image": "/images/grains-sides/AsliAdzukuBeans_Abuulo_2lbs.jpg",
-    "description": "High-quality Adzuku beans, perfect for soups and stews.",
+    "image": "/images/grains-sides/PastaZARA_Macaroni_Elbows.webp",
+    "description": "Elbow macaroni perfect for pasta salads and mac & cheese.",
     "inStock": true
   },
   {
     "id": "grains-sides-3",
     "name": "Asli Pot Barley 2lbs",
     "category": "grains-sides",
-    "image": "/images/grains-sides/AsliPotBarley2lbs.jpg",
-    "description": "Nutritious barley, ideal for healthy cooking and salads.",
+    "image": "/images/grains-sides/AsliPotBarley2lbs.webp",
+    "description": "Healthy and hearty pot barley for soups and stews.",
     "inStock": true
   },
   {
     "id": "grains-sides-4",
-    "name": "Asli Red Chori 2lbs",
+    "name": "Deep Jowar Flour Sorghum Flour",
     "category": "grains-sides",
-    "image": "/images/grains-sides/AsliRedChori2lbs.jpg",
-    "description": "Red Chori beans for traditional dishes and stews.",
+    "image": "/images/grains-sides/deep_jowar_flour_sorghum_flour.webp",
+    "description": "Gluten-free jowar flour perfect for rotis and baking.",
     "inStock": true
   },
   {
     "id": "grains-sides-5",
-    "name": "Asli White Corn Meal Coarse Ugali 2lbs",
+    "name": "Asli Adzuku Beans Abuulo 2lbs",
     "category": "grains-sides",
-    "image": "/images/grains-sides/AsliWhiteCornMealCoarse_Ugali_2lbs.jpg",
-    "description": "Coarse white cornmeal for making authentic Ugali.",
+    "image": "/images/grains-sides/AsliAdzukuBeans_Abuulo_2lbs.webp",
+    "description": "Nutritious adzuki beans, great for soups and stews.",
     "inStock": true
   },
   {
     "id": "grains-sides-6",
-    "name": "Juwar Whole Sorghum",
+    "name": "Asli White Corn Meal Coarse Ugali 2lbs",
     "category": "grains-sides",
-    "image": "/images/grains-sides/Juwar_Whole_Sorghum.jpg",
-    "description": "Whole sorghum grains for cooking and baking.",
+    "image": "/images/grains-sides/AsliWhiteCornMealCoarse_Ugali_2lbs.webp",
+    "description": "Traditional coarse cornmeal ideal for ugali and porridge.",
     "inStock": true
   },
   {
     "id": "grains-sides-7",
     "name": "MultiGrain ATTA 9-Grain Flour Blend",
     "category": "grains-sides",
-    "image": "/images/grains-sides/MultiGrain_ATTA_9-Grain_flour_blend.jpg",
-    "description": "Healthy 9-grain flour blend for breads and pastries.",
+    "image": "/images/grains-sides/MultiGrain_ATTA_9-Grain_flour_blend.webp",
+    "description": "Wholesome 9-grain flour blend for nutritious meals.",
     "inStock": true
   },
   {
     "id": "grains-sides-8",
     "name": "Ocean Pearl Basmati Rice",
     "category": "grains-sides",
-    "image": "/images/grains-sides/Ocean_Pearl_Basmati_Rice.jpg",
-    "description": "Fragrant and fluffy Basmati rice for all occasions.",
+    "image": "/images/grains-sides/Ocean_Pearl_Basmati_Rice.webp",
+    "description": "Long-grain aromatic basmati rice for everyday cooking.",
     "inStock": true
   },
   {
     "id": "grains-sides-9",
-    "name": "Pasta Lori Puglia Capellini 1 Pasta",
+    "name": "Swaraj Black Eye Bean Dal",
     "category": "grains-sides",
-    "image": "/images/grains-sides/Pasta_Lori_Puglia_Capellini_1_Pasta.jpg",
-    "description": "Thin and delicate Italian Capellini pasta.",
+    "image": "/images/grains-sides/Swaraj_Black_Eye_Bean_Dal.webp",
+    "description": "Protein-rich black eye bean dal for healthy meals.",
     "inStock": true
   },
   {
     "id": "grains-sides-10",
-    "name": "Pasta Lori Puglia Spaghettini 2 Pasta",
+    "name": "Pasta Lori Puglia Capellini 1 Pasta",
     "category": "grains-sides",
-    "image": "/images/grains-sides/Pasta_Lori_Puglia_Spaghettini_2_Pasta.jpg",
-    "description": "Authentic spaghettini pasta for light meals.",
+    "image": "/images/grains-sides/Pasta_Lori_Puglia_Capellini_1_Pasta.webp",
+    "description": "Delicate capellini pasta perfect for light sauces.",
     "inStock": true
   },
   {
     "id": "grains-sides-11",
-    "name": "Pasta ZARA Chifferi Rigati Pasta",
+    "name": "Aahubarah Basmati Sela Rice",
     "category": "grains-sides",
-    "image": "/images/grains-sides/PastaZARA_Chifferi_Rigati_Pasta.jpg",
-    "description": "Rigati pasta with ridges to hold sauce perfectly.",
+    "image": "/images/grains-sides/AahubarahBasmatiSelaRice.webp",
+    "description": "Premium sela basmati rice with extra-long grains.",
     "inStock": true
   },
   {
     "id": "grains-sides-12",
-    "name": "Pasta ZARA Macaroni Elbows",
+    "name": "SWAD Multi Grain Chappati Flour",
     "category": "grains-sides",
-    "image": "/images/grains-sides/PastaZARA_Macaroni_Elbows.jpg",
-    "description": "Classic elbow macaroni for everyday pasta dishes.",
+    "image": "/images/grains-sides/SWAD_Multi_Grain_Chappati_Flour.webp",
+    "description": "Nutritious flour mix for soft and healthy chapatis.",
     "inStock": true
   },
   {
     "id": "grains-sides-13",
-    "name": "Sella Parboiled Basmati Rice 1",
+    "name": "Asli Red Chori 2lbs",
     "category": "grains-sides",
-    "image": "/images/grains-sides/Sella_Parboiled_Basmati_Rice_1.jpg",
-    "description": "Premium parboiled Basmati rice, ideal for fluffy cooking.",
+    "image": "/images/grains-sides/AsliRedChori2lbs.webp",
+    "description": "Red chori beans packed with protein and fiber.",
     "inStock": true
   },
   {
     "id": "grains-sides-14",
-    "name": "SWAD Multi Grain Chappati Flour",
+    "name": "Pasta ZARA Chifferi Rigati Pasta",
     "category": "grains-sides",
-    "image": "/images/grains-sides/SWAD_Multi_Grain_Chappati_Flour.jpg",
-    "description": "Multigrain flour perfect for making nutritious chapati.",
+    "image": "/images/grains-sides/PastaZARA_Chifferi_Rigati_Pasta.webp",
+    "description": "Ridged pasta perfect for creamy sauces and bakes.",
     "inStock": true
   },
+  {
+    "id": "grains-sides-15",
+    "name": "Juwar Whole Sorghum",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Juwar_Whole_Sorghum.webp",
+    "description": "Whole sorghum grains for porridge and flour milling.",
+    "inStock": true
+  },
+  {
+    "id": "grains-sides-16",
+    "name": "Sella Parboiled Basmati Rice 1",
+    "category": "grains-sides",
+    "image": "/images/grains-sides/Sella_Parboiled_Basmati_Rice_1.webp",
+    "description": "Parboiled basmati rice with long, non-sticky grains.",
+    "inStock": true
+  },
+  {
+    "id": "okf-1",
+    "name": "OKF Mango Aloe Vera Drink",
+    "category": "OKF",
+    "image": "/images/OKF/Okf_Farmers_Aloe_Vera_Drink_Mango.webp",
+    "description": "Refreshing aloe vera drink with tropical mango flavor.",
+    "inStock": true
+  },
+  {
+    "id": "okf-2",
+    "name": "OKF Pineapple Aloe Vera Drink",
+    "category": "OKF",
+    "image": "/images/OKF/Okf_Farmers_Aloe_Vera_Drink_Pineapple.webp",
+    "description": "Sweet aloe vera drink blended with pineapple.",
+    "inStock": true
+  },
+  {
+    "id": "okf-3",
+    "name": "OKF Green Aloe Vera Drink Original",
+    "category": "OKF",
+    "image": "/images/OKF/Okf_Farmers_Aloe_Vera_Drink_Original_Green.webp",
+    "description": "Original aloe vera drink with fresh natural taste.",
+    "inStock": true
+  },
+  {
+    "id": "okf-4",
+    "name": "OKF Pomegranate Aloe Vera Drink",
+    "category": "OKF",
+    "image": "/images/OKF/Okf_Farmers_Aloe_Vera_Drink_Pomegranate.webp",
+    "description": "Delightful aloe vera drink with pomegranate flavor.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-1",
+    "name": "Pocasville Passion Fruit Juice Drink",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Passion_Fruit_Juice_Drink.webp",
+    "description": "Tropical passion fruit juice with rich flavor.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-2",
+    "name": "Pocasville Soursop Juice Drink Green",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Soursop_Juice_Drink_Green.webp",
+    "description": "Refreshing soursop juice drink with a tropical twist.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-3",
+    "name": "Pocas Popping Boba Mixed Berry Hibiscus Tea",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Popping_Boba_Mixed_Berry_Hibiscus_Tea.webp",
+    "description": "Fruity hibiscus tea with chewy popping boba.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-4",
+    "name": "Pocas Toktok Strawberry 1",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_toktok_strawberry_1.webp",
+    "description": "Sweet strawberry Toktok juice for a fun refreshment.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-5",
+    "name": "Pocasville Hibiscus Juice Drink",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Hibiscus_Juice_Drink.webp",
+    "description": "Rich and tangy hibiscus juice with floral notes.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-6",
+    "name": "Pocas Bubble Tea Taro",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_bubble_tea_taro_1.webp",
+    "description": "Creamy taro-flavored bubble tea with tapioca pearls.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-7",
+    "name": "Pocas Toktok Lychee",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_toktok_lychee_1.webp",
+    "description": "Exotic lychee-flavored Toktok fruit juice.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-8",
+    "name": "Pocas Toktok Fruit Juice Coco Lychee",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Tok_Tok_Fruit_Juice_Coco_Lychee.webp",
+    "description": "Refreshing coconut-lychee juice fusion drink.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-9",
+    "name": "Pocas Toktok Fruit Juice Coco Pineapple",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Tok_Tok_Fruit_Juice_Coco_Pineapple.webp",
+    "description": "Tropical pineapple and coconut juice blend.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-10",
+    "name": "Pocasville Pineapple Juice Drink",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Pineapple_Juice_Drink.webp",
+    "description": "Refreshing pineapple juice drink with natural sweetness.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-11",
+    "name": "Pocas Bubble Tea Brown Sugar",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_bubble_tea_brown_sugar_1.webp",
+    "description": "Brown sugar milk tea with chewy boba pearls.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-12",
+    "name": "Pocas Bubble Tea Mango",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_bubble_tea_mango_1.webp",
+    "description": "Fruity mango bubble tea with smooth taste.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-13",
+    "name": "Pocas Toktok Fruit Juice Coco Strawberry",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Tok_Tok_Fruit_Juice_Coco_Strawberry.webp",
+    "description": "Refreshing strawberry and coconut fruit juice.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-14",
+    "name": "Pocas Bubble Tea Classic",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_bubble_tea_classic_1.webp",
+    "description": "Classic milk tea flavor with chewy tapioca pearls.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-15",
+    "name": "Pocas Bubble Tea Thai Tea Boba",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Bubble_Tea_Thai_Tea_Boba.webp",
+    "description": "Authentic Thai tea bubble drink with boba.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-16",
+    "name": "Pocas Popping Boba Peach Oolong Tea",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Popping_Boba_Peach_Oolong_Tea.webp",
+    "description": "Peach oolong tea with popping boba pearls.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-17",
+    "name": "Pocasville Mango Juice Drink Orange",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Mango_Juice_Drink_Orange.webp",
+    "description": "Tropical mango-orange juice for a fruity refreshment.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-18",
+    "name": "Pocas Popping Boba Strawberry Dragon Fruit Oolong Tea",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Popping_Boba_Strawberry_Dragon_Fruit_Oolong_Tea.webp",
+    "description": "Exotic strawberry dragon fruit oolong tea with boba.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-19",
+    "name": "Pocasville Dragon Fruit Juice",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Dragon_Fruit_Juice.webp",
+    "description": "Bright pink dragon fruit juice full of antioxidants.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-20",
+    "name": "Pocasville Tamarind Juice Drink",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocasville_Tamarind_Juice_Drink.webp",
+    "description": "Tangy tamarind juice drink with a tropical punch.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-21",
+    "name": "Pocas Bubble Tea Honeydew",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_bubble_tea_honeydew_1.webp",
+    "description": "Honeydew bubble tea with creamy melon taste.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-22",
+    "name": "Pocas Toktok Fruit Juice Coco Mango",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Tok_Tok_Fruit_Juice_Coco_Mango.webp",
+    "description": "Delicious mango and coconut juice blend.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-23",
+    "name": "Pocas Toktok Fruit Juice Coco Melon",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Tok_Tok_Fruit_Juice_Coco_Melon.webp",
+    "description": "Refreshing melon-coconut juice fusion drink.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-24",
+    "name": "Pocas Bubble Tea Matcha",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/pocas_bubble_tea_matcha_1.webp",
+    "description": "Earthy matcha bubble tea with creamy balance.",
+    "inStock": true
+  },
+  {
+    "id": "pocas-products-25",
+    "name": "Pocas Bubble Tea Matcha Boba Green",
+    "category": "pocas-products",
+    "image": "/images/pocas-products/Pocas_Bubble_Tea_Matcha_Boba_Green.webp",
+    "description": "Green matcha bubble tea packed with boba pearls.",
+    "inStock": true
+  },
+
   {
     "id": "sauces-dips-1",
     "name": "Cholula Hot Sauce Original",
     "category": "sauces-dips",
-    "image": "/images/sauces-dips/CholulaHotSauceOriginal.jpg",
-    "description": "Authentic Mexican hot sauce to spice up your meals.",
+    "image": "/images/sauces-dips/CholulaHotSauceOriginal.webp",
+    "description": "Classic Mexican-style hot sauce with balanced heat and flavor.",
     "inStock": true
   },
   {
     "id": "sauces-dips-2",
-    "name": "Heinz Tomato Ketchup 2lb",
+    "name": "Sweet Baby Ray’s Barbecue Sauce 40oz 2ct",
     "category": "sauces-dips",
-    "image": "/images/sauces-dips/HeinzTomatoKetchup_2lb.jpg",
-    "description": "Classic Heinz tomato ketchup for dipping and cooking.",
+    "image": "/images/sauces-dips/SweetBabyRay_sBarbecueSauce_40oz_2ct.webp",
+    "description": "Sweet and tangy barbecue sauce perfect for grilling.",
     "inStock": true
   },
   {
     "id": "sauces-dips-3",
-    "name": "Hidden Valley The Original Homestyle Thick & Creamy",
+    "name": "Heinz Tomato Ketchup 2lb",
     "category": "sauces-dips",
-    "image": "/images/sauces-dips/HiddenValleyTheOriginalHomestyleThick_Creamy.jpg",
-    "description": "Rich and creamy ranch dressing for salads and dips.",
+    "image": "/images/sauces-dips/HeinzTomatoKetchup_2lb.webp",
+    "description": "Classic Heinz ketchup made from ripe tomatoes.",
     "inStock": true
   },
   {
     "id": "sauces-dips-4",
-    "name": "Kesar Mango Pulp",
+    "name": "Hidden Valley Original Homestyle Thick & Creamy",
     "category": "sauces-dips",
-    "image": "/images/sauces-dips/Kesar_Mango_Pulp.jpg",
-    "description": "Sweet and smooth mango pulp for desserts and drinks.",
+    "image": "/images/sauces-dips/HiddenValleyTheOriginalHomestyleThick_Creamy.webp",
+    "description": "Creamy ranch dressing perfect for salads and dips.",
     "inStock": true
   },
   {
     "id": "sauces-dips-5",
-    "name": "Sweet Baby Ray's Barbecue Sauce 40oz 2ct",
+    "name": "Kesar Mango Pulp",
     "category": "sauces-dips",
-    "image": "/images/sauces-dips/SweetBabyRay_sBarbecueSauce_40oz_2ct.jpg",
-    "description": "Rich barbecue sauce perfect for grilling and marinating.",
+    "image": "/images/sauces-dips/Kesar_Mango_Pulp.webp",
+    "description": "Rich and sweet Kesar mango pulp ideal for desserts and drinks.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-1",
-    "name": "Deep Premium Spices Cloves 100g",
+    "name": "EK Cin Food Seasoning",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesCloves_100g.jpg",
-    "description": "Aromatic cloves ideal for cooking and baking.",
+    "image": "/images/spices-seasonings/EK_Cin_food_seasoning.webp",
+    "description": "Versatile food seasoning for rich and savory meals.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-2",
-    "name": "Deep Premium Spices Turmeric Powder 400g",
+    "name": "Deep Premium Spices Cloves 100g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesTurmericPowder_400g.jpg",
-    "description": "Bright yellow turmeric powder for authentic flavor and color.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCloves_100g.webp",
+    "description": "Aromatic cloves to enhance your curries and desserts.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-3",
-    "name": "Deep Premium Spices Coriander Powder 400g",
+    "name": "Deep Premium Spices Garlic Powder 400g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesCorianderPowder_400g.jpg",
-    "description": "Fresh coriander powder for rich, aromatic dishes.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesGarlicPowder_400g.webp",
+    "description": "Rich garlic powder for seasoning and everyday cooking.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-4",
-    "name": "EK Cin Food Seasoning",
+    "name": "Deep Premium Spices Curry Powder 150g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/EK_Cin_food_seasoning.jpg",
-    "description": "Versatile seasoning blend for savory dishes.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCurryPowder_150g.webp",
+    "description": "Fragrant curry powder with bold traditional flavor.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-5",
-    "name": "Deep Premium Spices Coriander Seeds 100g",
+    "name": "McCormick Cayenne Red Pepper 396g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesCorianderSeeds_100g.jpg",
-    "description": "Whole coriander seeds to grind fresh for maximum flavor.",
+    "image": "/images/spices-seasonings/McCormickCayenneRedPepper_396g.webp",
+    "description": "Spicy cayenne pepper for extra heat in every dish.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-6",
-    "name": "Kirkland Fine Ground Black Pepper 349g",
+    "name": "Deep Premium Spices Cumin Seeds 200g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/KirklandFineGroundBlackPepper_349g..jpg",
-    "description": "Premium black pepper for everyday seasoning.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCuminSeeds_200g.webp",
+    "description": "Whole cumin seeds with strong aroma for authentic flavor.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-7",
-    "name": "Deep Premium Spices Cumin Seeds 200g",
+    "name": "McCormic Granulated Onion Cebolla Granulada 510g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesCuminSeeds_200g.jpg",
-    "description": "Fragrant cumin seeds for authentic cooking.",
+    "image": "/images/spices-seasonings/McCormicGranulatedOnionCebollaGranulada_510g.webp",
+    "description": "Granulated onion perfect for soups and sauces.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-8",
-    "name": "Kirkland Organic Saigon Cinnamon Ground 303g",
+    "name": "Deep Premium Spices Coriander Seeds 100g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/KirklandOrganicSaigonCinnamonGround_303g.jpg",
-    "description": "Aromatic ground cinnamon for baking and drinks.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCorianderSeeds_100g.webp",
+    "description": "Fresh coriander seeds to grind or use whole.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-9",
-    "name": "Deep Premium Spices Curry Powder 150g",
+    "name": "Deep Premium Spices Red Chili Powder Extra Hot 200g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesCurryPowder_150g.jpg",
-    "description": "Rich and fragrant curry powder for your dishes.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliPowderExtraHot_200g.webp",
+    "description": "Extra hot chili powder for bold spicy dishes.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-10",
     "name": "Kirkland Signature Ground Turmeric 12oz",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/KirklandSignatureGroundTurmeric_12oz.jpg",
-    "description": "Bright and earthy turmeric powder for vibrant cooking.",
+    "image": "/images/spices-seasonings/KirklandSignatureGroundTurmeric_12oz.webp",
+    "description": "Vibrant turmeric powder with earthy flavor and color.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-11",
-    "name": "Deep Premium Spices Garlic Powder 400g",
+    "name": "Deep Premium Spices Turmeric Powder 400g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesGarlicPowder_400g.jpg",
-    "description": "Rich garlic flavor powder for seasoning and cooking.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesTurmericPowder_400g.webp",
+    "description": "Bright turmeric powder for flavor and wellness.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-12",
-    "name": "Maggi Seasoning Cubes",
+    "name": "Kirkland Fine Ground Black Pepper 349g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/Maggi_Seasoning_cubes.jpg",
-    "description": "Versatile seasoning cubes for soups, sauces, and stews.",
+    "image": "/images/spices-seasonings/KirklandFineGroundBlackPepper_349g..webp",
+    "description": "Finely ground black pepper for everyday seasoning.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-13",
-    "name": "Deep Premium Spices Ginger Powder 400g",
+    "name": "Deep Premium Spices Red Chili Powder 200g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesGingerPowder_400g.jpg",
-    "description": "Pure ginger powder for spice and flavor.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliPowder_200g.webp",
+    "description": "Medium-hot chili powder for flavorful dishes.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-14",
-    "name": "McCormic Granulated Onion Cebolla Granulada 510g",
+    "name": "Kirkland Organic Saigon Cinnamon Ground 303g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/McCormicGranulatedOnionCebollaGranulada_510g.jpg",
-    "description": "Granulated onion for flavoring soups, sauces, and stews.",
+    "image": "/images/spices-seasonings/KirklandOrganicSaigonCinnamonGround_303g.webp",
+    "description": "Aromatic ground cinnamon for drinks and desserts.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-15",
-    "name": "Deep Premium Spices Red Chili Crushed 350g",
+    "name": "McCormick Lemon Pepper Seasoning 793g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliCrushed_350g.jpg",
-    "description": "Crushed red chili for a spicy kick in your dishes.",
+    "image": "/images/spices-seasonings/McCormickLemon_PepperSeasoning_793g.webp",
+    "description": "Zesty lemon pepper blend for seafood and salads.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-16",
-    "name": "McCormick Cayenne Red Pepper 396g",
+    "name": "Deep Premium Spices Coriander Powder 400g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/McCormickCayenneRedPepper_396g.jpg",
-    "description": "Spicy cayenne pepper to elevate the flavor of any dish.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesCorianderPowder_400g.webp",
+    "description": "Fine-ground coriander powder with warm aroma.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-17",
-    "name": "Deep Premium Spices Red Chili Powder Extra Hot 200g",
+    "name": "Deep Premium Spices Red Chili Crushed 350g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliPowderExtraHot_200g.jpg",
-    "description": "Extra hot red chili powder for bold, spicy flavors.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliCrushed_350g.webp",
+    "description": "Crushed red chili flakes for heat and flavor.",
     "inStock": true
   },
   {
     "id": "spices-seasonings-18",
-    "name": "Deep Premium Spices Red Chili Powder 200g",
+    "name": "Deep Premium Spices Ginger Powder 400g",
     "category": "spices-seasonings",
-    "image": "/images/spices-seasonings/DeepPremiumSpicesRedChiliPowder_200g.jpg",
-    "description": "Red chili powder for a moderate, flavorful heat.",
+    "image": "/images/spices-seasonings/DeepPremiumSpicesGingerPowder_400g.webp",
+    "description": "Ground ginger for tea, baking, and savory dishes.",
     "inStock": true
   },
   {
+    "id": "spices-seasonings-19",
+    "name": "Maggi Seasoning Cubes",
+    "category": "spices-seasonings",
+    "image": "/images/spices-seasonings/Maggi_Seasoning_cubes.webp",
+    "description": "Classic seasoning cubes for stews and soups.",
+    "inStock": true
+  },
+  
+  
+  {
     "id": "tea-1",
-    "name": "Blue Horn Shaah Authentic Somali Tea Blend",
+    "name": "Poca Honey Ginger Instant Tea",
     "category": "tea",
-    "image": "/images/tea/BlueHornShaahAuthenticSomaliTeaBlend.jpg",
-    "description": "Authentic Somali tea blend for a rich and aromatic experience.",
+    "image": "/images/tea/Poca_Honey_Ginger_Instant_Tea.webp",
+    "description": "Instant tea blend of honey and ginger for soothing flavor.",
     "inStock": true
   },
   {
     "id": "tea-2",
-    "name": "Ketepa Pride Kenya's Finest Tea Bags",
+    "name": "Red Label Loose Leaf Black Tea",
     "category": "tea",
-    "image": "/images/tea/Ketepa_Pride_Kenyas_Finest_Tea_Bags.jpg",
-    "description": "Premium Kenyan tea bags for a perfect cup every time.",
+    "image": "/images/tea/Red_Label_Loose_Leaf_Black_Tea.webp",
+    "description": "Strong and rich loose leaf black tea blend.",
     "inStock": true
   },
   {
     "id": "tea-3",
-    "name": "Red Label Loose Leaf Black Tea",
+    "name": "Pocas Instant Ginger Honey Tea Lemon",
     "category": "tea",
-    "image": "/images/tea/Red_Label_Loose_Leaf_Black_Tea.jpg",
-    "description": "Classic black tea with rich flavor, perfect for brewing loose leaf.",
+    "image": "/images/tea/Pocas_Instant_Ginger_Honey_Tea_Lemon.webp",
+    "description": "Instant lemon-flavored ginger honey tea mix.",
+    "inStock": true
+  },
+  {
+    "id": "tea-4",
+    "name": "Ketepa Pride Kenya’s Finest Tea Bags",
+    "category": "tea",
+    "image": "/images/tea/Ketepa_Pride_Kenyas_Finest_Tea_Bags.webp",
+    "description": "Premium Kenyan black tea bags with bold flavor.",
+    "inStock": true
+  },
+  {
+    "id": "tea-5",
+    "name": "Blue Horn Shaah Authentic Somali Tea Blend",
+    "category": "tea",
+    "image": "/images/tea/BlueHornShaahAuthenticSomaliTeaBlend.webp",
+    "description": "Authentic Somali tea blend rich in spices and aroma.",
+    "inStock": true
+  },
+  {
+    "id": "tea-6",
+    "name": "Pocas Honey Ginger Instant Tea Powder Mint Flavor",
+    "category": "tea",
+    "image": "/images/tea/Pocas_Honey_Ginger_Instant_Tea_Powder_Mint_Flavor.webp",
+    "description": "Refreshing honey ginger tea with mint twist.",
+    "inStock": true
+  },
+  {
+    "id": "tea-7",
+    "name": "Pocas Honey Ginger Instant Tea Powder Turmeric",
+    "category": "tea",
+    "image": "/images/tea/Pocas_Honey_Ginger_Instant_Tea_Powder_Turmeric.webp",
+    "description": "Turmeric-infused honey ginger tea for wellness.",
+    "inStock": true
+  },
+  {
+    "id": "tea-8",
+    "name": "Pocas Honey Ginger Instant Tea Powder",
+    "category": "tea",
+    "image": "/images/tea/Pocas_Honey_Ginger_Instant_Tea_Powder.webp",
+    "description": "Classic honey ginger instant tea blend.",
     "inStock": true
   }
 ]
