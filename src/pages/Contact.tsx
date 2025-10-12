@@ -126,7 +126,8 @@ const Contact = () => {
           </div>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="order-2 lg:order-1">
+            {/* EMAIL FORM - FIRST ON MOBILE, LEFT ON DESKTOP */}
+            <div className="order-1 lg:order-2">
               <form onSubmit={handleSubmit} className="bg-card rounded-lg p-8 shadow-lg animate-fade-in">
                 <div className="space-y-6">
                   <div className="space-y-2">
@@ -195,7 +196,8 @@ const Contact = () => {
               </form>
             </div>
 
-            <div className="order-1 lg:order-2 space-y-6">
+            {/* ADDRESS SECTION - SECOND ON MOBILE, RIGHT ON DESKTOP */}
+            <div className="order-2 lg:order-1 space-y-6">
               <div className="bg-card rounded-lg p-8 shadow-md animate-fade-in">
                 <p className="text-lg mb-8 leading-relaxed text-muted-foreground">
                   Family-owned and operated, committed to serving Minneapolis and the Midwest with dedication and excellence.
