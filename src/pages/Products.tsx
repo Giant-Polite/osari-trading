@@ -44,6 +44,8 @@ const ProductsPage = () => {
   const { toasts, showToast, removeToast } = usePremiumToast();
   const navigate = useNavigate();
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  const navBarRef = useRef<HTMLDivElement>(null); // Ref for the Navbar container
+  const categoryButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({}); // Refs for category buttons
 
   // Fetch products and categories from Supabase
   const fetchProducts = async () => {
@@ -65,7 +67,7 @@ const ProductsPage = () => {
         .sort((a, b) => a.localeCompare(b))
         .map((name) => ({
           name,
-          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), // Handle "&" in "Spice & Seasonings"
+          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
         }));
       console.log("Unique categories:", uniqueCategories);
       setCategories(uniqueCategories);
@@ -105,6 +107,30 @@ const ProductsPage = () => {
     setActiveCategory(slug);
   };
 
+  // Auto-scroll Navbar to center the active category
+  useEffect(() => {
+    if (activeCategory && navBarRef.current && categoryButtonRefs.current[activeCategory]) {
+      const navBar = navBarRef.current;
+      const activeButton = categoryButtonRefs.current[activeCategory];
+      if (!activeButton) return;
+
+      const buttonRect = activeButton.getBoundingClientRect();
+      const navBarRect = navBar.getBoundingClientRect();
+
+      // Calculate the scroll position to center the active button
+      const scrollLeft =
+        activeButton.offsetLeft +
+        buttonRect.width / 2 -
+        navBarRect.width / 2;
+
+      // Smoothly scroll the Navbar
+      navBar.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
+    }
+  }, [activeCategory]);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -142,7 +168,7 @@ const ProductsPage = () => {
       showToast({
         title: "Already in Cart",
         description: `${productName} is already in the contact form.`,
-        variant: "info", // Changed from "default" to "info"
+        variant: "info",
         duration: 3000,
       });
     }
@@ -210,10 +236,14 @@ const ProductsPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex gap-2 overflow-x-auto px-2 scrollbar-hide">
+            <div
+              ref={navBarRef}
+              className="flex gap-2 overflow-x-auto px-2 scrollbar-hide"
+            >
               {categories?.map((cat, index) => (
                 <motion.button
                   key={cat.slug}
+                  ref={(el) => (categoryButtonRefs.current[cat.slug] = el)}
                   onClick={() => scrollToCategory(cat.slug)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     activeCategory === cat.slug
