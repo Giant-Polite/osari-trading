@@ -23,3 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.bak
+node_modules/
+backend/node_modules/
+dist/
+build/
