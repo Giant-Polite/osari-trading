@@ -5,15 +5,15 @@
   "type": "module",
   "homepage": "https://giant-polite.github.io/osari-trading/",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "server": "node ./backend/index.js",
-    "generate-sitemap": "node generate-sitemap.js"
-  },
+  "start": "vite",
+  "dev": "vite",
+  "build": "vite build",
+  "build:dev": "vite build --mode development",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "server": "ts-node --esm backend/index.js",
+  "generate-sitemap": "node generate-sitemap.js"
+},
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.10.0",
