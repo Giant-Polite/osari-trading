@@ -1,6 +1,4 @@
 // src/api/products.ts
-import productsData from "@/data/products.json";
-
 export interface Product {
   id: string;
   name: string;
@@ -8,7 +6,7 @@ export interface Product {
   image: string;
   description: string;
   featured?: boolean;
-  inStock?: boolean; // optional stock status
+  inStock?: boolean;
 }
 
 export interface Category {
@@ -19,37 +17,43 @@ export interface Category {
   description: string;
 }
 
-// Generate categories dynamically from products
-export const categories: Category[] = Array.from(
-  new Set(productsData.map((p) => p.category))
-).map((slug, index) => {
-  const product = productsData.find((p) => p.category === slug)!;
-  return {
-    id: String(index + 1),
-    name: slug.replace(/-/g, " "),
-    slug,
-    image: product.image,
-    description: `${slug.replace(/-/g, " ")} products`,
-  };
-});
+// ✅ Use environment variable (set in .env)
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://osari-trading-backend.onrender.com/api/products"; // we'll use this after deployment
 
-export const fetchCategories = async (): Promise<Category[]> => {
-  return categories;
-};
-
+// ✅ Fetch all products
 export const fetchProducts = async (): Promise<Product[]> => {
-  return productsData;
+  const res = await fetch(API_URL);
+  if (!res.ok) throw new Error("Failed to fetch products");
+  return res.json();
 };
 
-export const fetchProductsByCategory = async (
-  categorySlug: string
-): Promise<Product[]> => {
-  return productsData.filter((product) => product.category === categorySlug);
+// ✅ Add new product
+export const addProduct = async (product: Product): Promise<void> => {
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(product),
+  });
+  if (!res.ok) throw new Error("Failed to add product");
 };
 
-// Optionally, fetch a single product by ID
-export const fetchProductById = async (
-  id: string
-): Promise<Product | null> => {
-  return productsData.find((product) => product.id === id) || null;
+// ✅ Update product
+export const updateProduct = async (
+  id: string,
+  updatedData: Partial<Product>
+): Promise<void> => {
+  const res = await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedData),
+  });
+  if (!res.ok) throw new Error("Failed to update product");
+};
+
+// ✅ Delete product
+export const deleteProduct = async (id: string): Promise<void> => {
+  const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+  if (!res.ok) throw new Error("Failed to delete product");
 };

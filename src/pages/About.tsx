@@ -10,118 +10,18 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState} from "react";
 
 const About = () => {
   const heroRef = useRef<HTMLDivElement | null>(null);
-  const aboutRef = useRef<HTMLDivElement | null>(null);
-  const highlightsRef = useRef<HTMLDivElement | null>(null);
-  const statsRef = useRef<HTMLDivElement | null>(null);
-  const valuesRef = useRef<HTMLDivElement | null>(null);
-
   const [showIndicator, setShowIndicator] = useState(true);
-  const [autoScrollActive, setAutoScrollActive] = useState(true);
+
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-
-  useEffect(() => {
-    console.log("About page mounted");
-
-    // Disable auto-scroll on mobile
-    const isMobile = window.innerWidth < 768;
-    if (isMobile) {
-      setAutoScrollActive(false);
-      return;
-    }
-
-    // Always start from the top of the page
-    window.scrollTo({ top: 0, behavior: "instant" });
-
-    if (!autoScrollActive) return;
-
-    let animationFrameId: number | null = null;
-
-    const scrollToRef = (
-      ref: React.RefObject<HTMLElement>,
-      duration = 3000,
-      offsetRatio = 0
-    ) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const targetY = rect.top + window.scrollY + rect.height * offsetRatio - 60;
-      const startY = window.scrollY;
-      const distance = targetY - startY;
-      let startTime: number | null = null;
-
-      const easeInOutQuad = (t: number) =>
-        t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-      const step = (timestamp: number) => {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = easeInOutQuad(progress);
-        window.scrollTo(0, startY + distance * eased);
-        if (progress < 1 && autoScrollActive) {
-          animationFrameId = requestAnimationFrame(step);
-        }
-      };
-
-      animationFrameId = requestAnimationFrame(step);
-    };
-
-    const sequence = async () => {
-      const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
-      const speed = 1;
-
-      if (!autoScrollActive) return;
-      setShowIndicator(true);
-
-      await wait(4000 * speed);
-      if (!autoScrollActive) return;
-
-      setShowIndicator(false);
-      scrollToRef(aboutRef, 4000 * speed);
-      await wait(6000 * speed);
-      if (!autoScrollActive) return;
-
-      scrollToRef(highlightsRef, 3500 * speed);
-      await wait(3000 * speed);
-      if (!autoScrollActive) return;
-
-      scrollToRef(statsRef, 3500 * speed);
-      await wait(3000 * speed);
-      if (!autoScrollActive) return;
-
-      scrollToRef(valuesRef, 4000 * speed, 0.25);
-      await wait(3000 * speed);
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    sequence();
-
-    const stopScroll = () => setAutoScrollActive(false);
-
-    window.addEventListener("wheel", stopScroll, { passive: true });
-    window.addEventListener("touchstart", stopScroll, { passive: true });
-    window.addEventListener("keydown", stopScroll);
-
-    return () => {
-      console.log("About page unmounted");
-      window.removeEventListener("wheel", stopScroll);
-      window.removeEventListener("touchstart", stopScroll);
-      window.removeEventListener("keydown", stopScroll);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      setAutoScrollActive(false);
-    };
-  }, [autoScrollActive]);
 
   // === Data ===
   const stats = [
@@ -225,8 +125,8 @@ const About = () => {
           >
             Family-Run Wholesale Excellence
           </motion.h2>
-
-          {/* Scroll Indicator */}
+        
+        {/* Scroll Indicator */}
           {showIndicator && (
             <motion.div
               className="absolute bottom-10 text-white flex flex-col items-center"
@@ -249,7 +149,7 @@ const About = () => {
       </section>
 
       {/* === ABOUT === */}
-      <section ref={aboutRef} className="container mx-auto px-6 py-20">
+      <section className="container mx-auto px-6 py-20">
         <motion.div
           className="max-w-4xl mx-auto bg-card rounded-xl p-8 md:p-14 shadow-lg backdrop-blur-sm"
           initial={{ opacity: 0, y: 40 }}
@@ -281,7 +181,7 @@ const About = () => {
       </section>
 
       {/* === HIGHLIGHTS === */}
-      <section ref={highlightsRef} className="container mx-auto px-6 pb-20">
+      <section className="container mx-auto px-6 pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {highlights.map((item, index) => (
             <motion.div
@@ -299,7 +199,7 @@ const About = () => {
       </section>
 
       {/* === STATS === */}
-      <section ref={statsRef} className="container mx-auto px-6 pb-28">
+      <section className="container mx-auto px-6 pb-28">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
@@ -325,7 +225,7 @@ const About = () => {
       </section>
 
       {/* === VALUES === */}
-      <section ref={valuesRef} className="pb-32 px-6">
+      <section className="pb-32 px-6">
         <motion.div
           className="max-w-5xl mx-auto"
           initial="hidden"

@@ -1,0 +1,242 @@
+.
+├── .DS_Store
+├── .env
+├── .gitignore
+├── README.md
+├── api
+├── backend
+│   ├── index.js
+│   ├── package-lock.json
+│   └── package.json
+├── components.json
+├── eslint.config.js
+├── index.html
+├── output
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── project_structure.txt
+├── public
+│   ├── .DS_Store
+│   ├── apple-touch-icon.png
+│   ├── favicon-96x96.png
+│   ├── favicon.ico
+│   ├── favicon.svg
+│   ├── images
+│   │   ├── .DS_Store
+│   │   ├── OKF
+│   │   │   ├── Okf_Farmers_Aloe_Vera_Drink_Mango.webp
+│   │   │   ├── Okf_Farmers_Aloe_Vera_Drink_Original_Green.webp
+│   │   │   ├── Okf_Farmers_Aloe_Vera_Drink_Pineapple.webp
+│   │   │   └── Okf_Farmers_Aloe_Vera_Drink_Pomegranate.webp
+│   │   ├── cooking-essential-oils
+│   │   │   ├── Banadir_Sesame_Oil_Small_c32f726d-f918-4ade-8bad-87b2d0a2f659.webp
+│   │   │   ├── Butcher_Boy_Pure_Corn_Oil.webp
+│   │   │   └── Extra_virgin_olive_oil_1_liter.webp
+│   │   ├── dates
+│   │   │   ├── .DS_Store
+│   │   │   ├── Ajwa_Al_Madina_Orchid_Dates.webp
+│   │   │   ├── Al_Madina_Dates_1.webp
+│   │   │   └── Aldayfe_Dates.webp
+│   │   ├── drink-desserts
+│   │   │   ├── .DS_Store
+│   │   │   ├── Abu_Walad_Sandwhich_Biscuits.webp
+│   │   │   ├── Core_Power_Strawberry_Banana.webp
+│   │   │   ├── Core_Power_chocolate_shake.webp
+│   │   │   ├── Foco_Roasted_Coconut_Juice.webp
+│   │   │   ├── Shani_Bottle.webp
+│   │   │   ├── Shani_Can.webp
+│   │   │   ├── SparklingVimtoCan_330ml.webp
+│   │   │   ├── SparklingVimtoFruitFlavorDrink_500ml_PlasticBottle.webp
+│   │   │   ├── VOSS_Natural_Spring_Water.webp
+│   │   │   ├── VimtoFruitSyrup710ml.webp
+│   │   │   └── core_power_vanilla_shake.jpeg
+│   │   ├── grains-sides
+│   │   │   ├── .DS_Store
+│   │   │   ├── AahubarahBasmatiSelaRice.webp
+│   │   │   ├── AsliAdzukuBeans_Abuulo_2lbs.webp
+│   │   │   ├── AsliPotBarley2lbs.webp
+│   │   │   ├── AsliRedChori2lbs.webp
+│   │   │   ├── AsliWhiteCornMealCoarse_Ugali_2lbs.webp
+│   │   │   ├── Juwar_Whole_Sorghum.webp
+│   │   │   ├── MultiGrain_ATTA_9-Grain_flour_blend.webp
+│   │   │   ├── Ocean_Pearl_Basmati_Rice.webp
+│   │   │   ├── PastaZARA_Chifferi_Rigati_Pasta.webp
+│   │   │   ├── PastaZARA_Macaroni_Elbows.webp
+│   │   │   ├── Pasta_Lori_Puglia_Capellini_1_Pasta.webp
+│   │   │   ├── Pasta_Lori_Puglia_Spaghettini_2_Pasta.webp
+│   │   │   ├── SWAD_Multi_Grain_Chappati_Flour.webp
+│   │   │   ├── Sella_Parboiled_Basmati_Rice_1.webp
+│   │   │   ├── Swaraj_Black_Eye_Bean_Dal.webp
+│   │   │   └── deep_jowar_flour_sorghum_flour.webp
+│   │   ├── pocas-products
+│   │   │   ├── .DS_Store
+│   │   │   ├── Pocas_Bubble_Tea_Matcha_Boba_Green.webp
+│   │   │   ├── Pocas_Bubble_Tea_Thai_Tea_Boba.webp
+│   │   │   ├── Pocas_Popping_Boba_Mixed_Berry_Hibiscus_Tea.webp
+│   │   │   ├── Pocas_Popping_Boba_Peach_Oolong_Tea.webp
+│   │   │   ├── Pocas_Popping_Boba_Strawberry_Dragon_Fruit_Oolong_Tea.webp
+│   │   │   ├── Pocas_Tok_Tok_Fruit_Juice_Coco_Lychee.webp
+│   │   │   ├── Pocas_Tok_Tok_Fruit_Juice_Coco_Mango.webp
+│   │   │   ├── Pocas_Tok_Tok_Fruit_Juice_Coco_Melon.webp
+│   │   │   ├── Pocas_Tok_Tok_Fruit_Juice_Coco_Pineapple.webp
+│   │   │   ├── Pocas_Tok_Tok_Fruit_Juice_Coco_Strawberry.webp
+│   │   │   ├── Pocasville_Dragon_Fruit_Juice.webp
+│   │   │   ├── Pocasville_Hibiscus_Juice_Drink.webp
+│   │   │   ├── Pocasville_Mango_Juice_Drink_Orange.webp
+│   │   │   ├── Pocasville_Passion_Fruit_Juice_Drink.webp
+│   │   │   ├── Pocasville_Pineapple_Juice_Drink.webp
+│   │   │   ├── Pocasville_Soursop_Juice_Drink_Green.webp
+│   │   │   ├── Pocasville_Tamarind_Juice_Drink.webp
+│   │   │   ├── pocas_bubble_tea_brown_sugar_1.webp
+│   │   │   ├── pocas_bubble_tea_classic_1.webp
+│   │   │   ├── pocas_bubble_tea_honeydew_1.webp
+│   │   │   ├── pocas_bubble_tea_mango_1.webp
+│   │   │   ├── pocas_bubble_tea_matcha_1.webp
+│   │   │   ├── pocas_bubble_tea_taro_1.webp
+│   │   │   ├── pocas_toktok_lychee_1.webp
+│   │   │   └── pocas_toktok_strawberry_1.webp
+│   │   ├── sauces-dips
+│   │   │   ├── CholulaHotSauceOriginal.webp
+│   │   │   ├── HeinzTomatoKetchup_2lb.webp
+│   │   │   ├── HiddenValleyTheOriginalHomestyleThick_Creamy.webp
+│   │   │   ├── Kesar_Mango_Pulp.webp
+│   │   │   └── SweetBabyRay_sBarbecueSauce_40oz_2ct.webp
+│   │   ├── spices-seasonings
+│   │   │   ├── .DS_Store
+│   │   │   ├── DeepPremiumSpicesCloves_100g.webp
+│   │   │   ├── DeepPremiumSpicesCorianderPowder_400g.webp
+│   │   │   ├── DeepPremiumSpicesCorianderSeeds_100g.webp
+│   │   │   ├── DeepPremiumSpicesCuminSeeds_200g.webp
+│   │   │   ├── DeepPremiumSpicesCurryPowder_150g.webp
+│   │   │   ├── DeepPremiumSpicesGarlicPowder_400g.webp
+│   │   │   ├── DeepPremiumSpicesGingerPowder_400g.webp
+│   │   │   ├── DeepPremiumSpicesRedChiliCrushed_350g.webp
+│   │   │   ├── DeepPremiumSpicesRedChiliPowderExtraHot_200g.webp
+│   │   │   ├── DeepPremiumSpicesRedChiliPowder_200g.webp
+│   │   │   ├── DeepPremiumSpicesTurmericPowder_400g.webp
+│   │   │   ├── EK_Cin_food_seasoning.webp
+│   │   │   ├── KirklandFineGroundBlackPepper_349g..webp
+│   │   │   ├── KirklandOrganicSaigonCinnamonGround_303g.webp
+│   │   │   ├── KirklandSignatureGroundTurmeric_12oz.webp
+│   │   │   ├── Maggi_Seasoning_cubes.webp
+│   │   │   ├── McCormicGranulatedOnionCebollaGranulada_510g.webp
+│   │   │   ├── McCormickCayenneRedPepper_396g.webp
+│   │   │   └── McCormickLemon_PepperSeasoning_793g.webp
+│   │   └── tea
+│   │       ├── .DS_Store
+│   │       ├── BlueHornShaahAuthenticSomaliTeaBlend.webp
+│   │       ├── Ketepa_Pride_Kenyas_Finest_Tea_Bags.webp
+│   │       ├── Poca_Honey_Ginger_Instant_Tea.webp
+│   │       ├── Pocas_Honey_Ginger_Instant_Tea_Powder.webp
+│   │       ├── Pocas_Honey_Ginger_Instant_Tea_Powder_Mint_Flavor.webp
+│   │       ├── Pocas_Honey_Ginger_Instant_Tea_Powder_Turmeric.webp
+│   │       ├── Pocas_Instant_Ginger_Honey_Tea_Lemon.webp
+│   │       └── Red_Label_Loose_Leaf_Black_Tea.webp
+│   ├── index.html
+│   ├── logo.webp
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   ├── robots.txt
+│   ├── site.webmanifest
+│   ├── warehouse.webp
+│   ├── web-app-manifest-192x192.png
+│   └── web-app-manifest-512x512.png
+├── scripts
+│   └── fetchProducts.js
+├── server.js
+├── src
+│   ├── .DS_Store
+│   ├── App.tsx
+│   ├── api
+│   │   └── products.ts
+│   ├── components
+│   │   ├── CategoryCard.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Layout.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── PremiumToast.tsx
+│   │   ├── ProductCard.tsx
+│   │   ├── ScrollToTop.tsx
+│   │   ├── TypewriterText.tsx
+│   │   └── ui
+│   │       ├── accordion.tsx
+│   │       ├── alert-dialog.tsx
+│   │       ├── alert.tsx
+│   │       ├── aspect-ratio.tsx
+│   │       ├── avatar.tsx
+│   │       ├── badge.tsx
+│   │       ├── breadcrumb.tsx
+│   │       ├── button.tsx
+│   │       ├── calendar.tsx
+│   │       ├── card.tsx
+│   │       ├── carousel.tsx
+│   │       ├── chart.tsx
+│   │       ├── checkbox.tsx
+│   │       ├── collapsible.tsx
+│   │       ├── command.tsx
+│   │       ├── context-menu.tsx
+│   │       ├── dialog.tsx
+│   │       ├── drawer.tsx
+│   │       ├── dropdown-menu.tsx
+│   │       ├── form.tsx
+│   │       ├── hover-card.tsx
+│   │       ├── input-otp.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── menubar.tsx
+│   │       ├── navigation-menu.tsx
+│   │       ├── pagination.tsx
+│   │       ├── popover.tsx
+│   │       ├── progress.tsx
+│   │       ├── radio-group.tsx
+│   │       ├── resizable.tsx
+│   │       ├── scroll-area.tsx
+│   │       ├── select.tsx
+│   │       ├── separator.tsx
+│   │       ├── sheet.tsx
+│   │       ├── sidebar.tsx
+│   │       ├── skeleton.tsx
+│   │       ├── slider.tsx
+│   │       ├── sonner.tsx
+│   │       ├── switch.tsx
+│   │       ├── table.tsx
+│   │       ├── tabs.tsx
+│   │       ├── textarea.tsx
+│   │       ├── toast.tsx
+│   │       ├── toaster.tsx
+│   │       ├── toggle-group.tsx
+│   │       ├── toggle.tsx
+│   │       ├── tooltip.tsx
+│   │       └── use-toast.ts
+│   ├── data
+│   │   └── products.json
+│   ├── hooks
+│   │   ├── use-mobile.tsx
+│   │   ├── use-toast.ts
+│   │   ├── usePremiumToast.ts
+│   │   └── useProducts.ts
+│   ├── index.css
+│   ├── lib
+│   │   ├── supabaseClient.ts
+│   │   └── utils.ts
+│   ├── main.tsx
+│   ├── main.tsx  vite-env.d.ts
+│   ├── pages
+│   │   ├── About.tsx
+│   │   ├── AdminDashboard.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Home.tsx
+│   │   ├── Login.tsx
+│   │   ├── NotFound.tsx
+│   │   └── Products.tsx
+│   └── supabaseClient.ts
+├── tailwind.config.ts
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite-env.d.ts
+└── vite.config.ts
+
+24 directories, 216 files

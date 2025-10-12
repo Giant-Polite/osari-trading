@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProducts, useCategories } from "@/hooks/useProducts";
 import { usePremiumToast } from "@/hooks/usePremiumToast";
 import { ToastContainer } from "@/components/PremiumToast";
 import TypewriterText from "@/components/TypewriterText";
@@ -9,6 +8,7 @@ import { Search, Sparkles, ShoppingBag, ArrowUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { supabase } from "../supabaseClient";
 
 const addToCart = (productName: string) => {
   const cart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
@@ -20,18 +20,61 @@ const addToCart = (productName: string) => {
   return false;
 };
 
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  description?: string;
+  image: string;
+  in_stock: boolean;
+}
+
+interface Category {
+  name: string;
+  slug: string;
+}
+
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const { toasts, showToast, removeToast } = usePremiumToast();
   const navigate = useNavigate();
-
-  const { data: products, isLoading: loadingProducts } = useProducts();
-  const { data: categories, isLoading: loadingCategories } = useCategories();
-
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+
+  // Fetch products and categories from Supabase
+  const fetchProducts = async () => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching products:", error.message);
+    } else {
+      console.log("Fetched products:", data);
+      setProducts(data || []);
+
+      // Extract unique categories and sort A-Z
+      const uniqueCategories = Array.from(
+        new Set(data?.map((p) => p.category))
+      )
+        .sort((a, b) => a.localeCompare(b))
+        .map((name) => ({
+          name,
+          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), // Handle "&" in "Spice & Seasonings"
+        }));
+      console.log("Unique categories:", uniqueCategories);
+      setCategories(uniqueCategories);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const filteredProducts = useMemo(() => {
     if (!products) return [];
@@ -39,15 +82,16 @@ const ProductsPage = () => {
     return products.filter(
       (p) =>
         p.name.toLowerCase().includes(term) ||
-        p.description?.toLowerCase().includes(term)
+        (p.description?.toLowerCase().includes(term) ?? false)
     );
   }, [products, searchTerm]);
 
   const productsByCategory = useMemo(() => {
-    const grouped: Record<string, typeof products> = {};
+    const grouped: Record<string, Product[]> = {};
     filteredProducts.forEach((p) => {
-      if (!grouped[p.category]) grouped[p.category] = [];
-      grouped[p.category].push(p);
+      const catSlug = p.category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      if (!grouped[catSlug]) grouped[catSlug] = [];
+      grouped[catSlug].push(p);
     });
     return grouped;
   }, [filteredProducts]);
@@ -87,15 +131,21 @@ const ProductsPage = () => {
 
   const handleRequestQuote = (productName: string) => {
     localStorage.setItem("contactProduct", productName);
-    addToCart(productName);
-
-    showToast({
-      title: "Request Sent",
-      description: `${productName} has been added to the contact form.`,
-      variant: "success",
-      duration: 3000,
-    });
-
+    if (addToCart(productName)) {
+      showToast({
+        title: "Request Sent",
+        description: `${productName} has been added to the contact form.`,
+        variant: "success",
+        duration: 3000,
+      });
+    } else {
+      showToast({
+        title: "Already in Cart",
+        description: `${productName} is already in the contact form.`,
+        variant: "info", // Changed from "default" to "info"
+        duration: 3000,
+      });
+    }
     navigate("/contact");
   };
 
@@ -105,7 +155,6 @@ const ProductsPage = () => {
     <>
       <ToastContainer toasts={toasts} onClose={removeToast} />
       <main className="min-h-screen bg-[var(--background)] relative">
-        {/* background glow */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute top-20 right-20 w-72 h-72 bg-[var(--chart-1)]/20 rounded-full blur-3xl" />
           <div className="absolute bottom-20 left-20 w-96 h-96 bg-[var(--chart-4)]/20 rounded-full blur-3xl" />
@@ -162,26 +211,22 @@ const ProductsPage = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="flex gap-2 overflow-x-auto px-2 scrollbar-hide">
-              {loadingCategories
-                ? [...Array(5)].map((_, i) => (
-                    <div key={i} className="h-10 w-24 bg-gray-200 rounded-lg animate-pulse" />
-                  ))
-                : categories?.map((cat, index) => (
-                    <motion.button
-                      key={cat.id}
-                      onClick={() => scrollToCategory(cat.slug)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
-                        activeCategory === cat.slug
-                          ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md scale-105"
-                          : "bg-white hover:bg-orange-50 text-gray-700"
-                      }`}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      {cat.name}
-                    </motion.button>
-                  ))}
+              {categories?.map((cat, index) => (
+                <motion.button
+                  key={cat.slug}
+                  onClick={() => scrollToCategory(cat.slug)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+                    activeCategory === cat.slug
+                      ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md scale-105"
+                      : "bg-white hover:bg-orange-50 text-gray-700"
+                  }`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  {cat.name}
+                </motion.button>
+              ))}
             </div>
           </motion.div>
 
@@ -193,7 +238,7 @@ const ProductsPage = () => {
 
               return (
                 <motion.section
-                  key={cat.id}
+                  key={cat.slug}
                   ref={(el) => (categoryRefs.current[cat.slug] = el)}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -219,12 +264,15 @@ const ProductsPage = () => {
                         transition={{ delay: index * 0.05 }}
                         className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100 group"
                       >
-                        {/* Updated image container */}
                         <div className="relative overflow-hidden aspect-square bg-gray-50 flex items-center justify-center">
                           <img
-                            src={product.image}
+                            src={product.image || "https://via.placeholder.com/300x192"}
                             alt={product.name}
                             className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => {
+                              console.error(`Image failed to load: ${product.image}`);
+                              e.currentTarget.src = "https://via.placeholder.com/300x192";
+                            }}
                           />
                         </div>
 
@@ -233,12 +281,17 @@ const ProductsPage = () => {
                             {product.name}
                           </h3>
                           <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                            {product.description}
+                            {product.description || "No description"}
                           </p>
                           <div className="flex gap-2 mb-4">
-                            <Badge className="bg-green-500 text-white text-xs">Halal Certified</Badge>
+                            <Badge className="bg-green-500 text-white text-xs">
+                              Halal Certified
+                            </Badge>
                             <Badge className="bg-blue-50 text-blue-700 text-xs border border-blue-200">
                               Premium Quality
+                            </Badge>
+                            <Badge className={product.in_stock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"} text-xs>
+                              {product.in_stock ? "In Stock" : "Out of Stock"}
                             </Badge>
                           </div>
                           <Button
@@ -255,6 +308,9 @@ const ProductsPage = () => {
                 </motion.section>
               );
             })}
+            {filteredProducts.length === 0 && (
+              <p className="text-center text-gray-600">No products match your filters.</p>
+            )}
           </div>
         </div>
 
@@ -274,6 +330,17 @@ const ProductsPage = () => {
             </div>
           </div>
         </motion.section>
+
+        {/* Scroll to Top Button */}
+        {showScrollTop && (
+          <Button
+            onClick={scrollToTop}
+            className="fixed bottom-4 right-4 rounded-full p-3 shadow-lg"
+            style={{ background: "#FFD700", color: "#8B6F47" }}
+          >
+            <ArrowUp className="w-6 h-6" />
+          </Button>
+        )}
       </main>
     </>
   );

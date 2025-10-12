@@ -1,14 +1,14 @@
-import { useCategories, useProducts } from "@/hooks/useProducts";
+import { useEffect, useState, useMemo } from "react";
+import { supabase } from "../supabaseClient";
 import CategoryCard from "@/components/CategoryCard";
 import TypewriterText from "@/components/TypewriterText";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Truck, Shield } from "lucide-react";
-import { useMemo } from "react";
 
 // Shuffle products and avoid adjacent duplicates
 const shuffleAndAvoidAdjacent = (array: any[]) => {
-  if (!array) return [];
+  if (!array?.length) return [];
   const shuffled = [...array].sort(() => Math.random() - 0.5);
   for (let i = 1; i < shuffled.length; i++) {
     if (shuffled[i].id === shuffled[i - 1].id) {
@@ -20,11 +20,34 @@ const shuffleAndAvoidAdjacent = (array: any[]) => {
 };
 
 const Home = () => {
-  const { data: categories } = useCategories();
-  const { data: products } = useProducts();
+  const [products, setProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  // Fetch products from Supabase
+  const fetchProducts = async () => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching products:", error.message);
+    } else {
+      console.log("Fetched products:", data);
+      setProducts(data || []);
+      // Extract unique categories
+      const uniqueCategories = Array.from(new Set(data?.map(p => p.category))).sort();
+      console.log("Unique categories:", uniqueCategories);
+      setCategories(uniqueCategories);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   // Shuffle products once
-  const shuffledProducts = useMemo(() => shuffleAndAvoidAdjacent(products || []), [products]);
+  const shuffledProducts = useMemo(() => shuffleAndAvoidAdjacent(products), [products]);
 
   // Duplicate for seamless scroll
   const displayProducts = useMemo(() => [...shuffledProducts, ...shuffledProducts], [shuffledProducts]);
@@ -57,26 +80,33 @@ const Home = () => {
 
         {/* ================= SCROLLING PRODUCT CAROUSEL ================= */}
         <div className="relative mt-16 overflow-hidden">
-          {/* Gradient edges */}
           <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
 
           <div className="overflow-hidden">
-            <div className="flex w-max animate-scroll-left">
-              {displayProducts.map((product, index) => (
-                <div
-                  key={`${product.id}-${index}`}
-                  className="flex-shrink-0 w-32 md:w-40 lg:w-48 mx-3 rounded-xl overflow-hidden bg-white shadow-sm"
-                >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-32 md:h-40 lg:h-48 object-contain transition-transform duration-500 hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
+            {products.length === 0 ? (
+              <p className="text-center text-gray-600">No products available.</p>
+            ) : (
+              <div className="flex w-max animate-scroll-left">
+                {displayProducts.map((product, index) => (
+                  <div
+                    key={`${product.id}-${index}`}
+                    className="flex-shrink-0 w-32 md:w-40 lg:w-48 mx-3 rounded-xl overflow-hidden bg-white shadow-sm"
+                  >
+                    <img
+                      src={product.image || "https://via.placeholder.com/300x192"}
+                      alt={product.name}
+                      className="w-full h-32 md:h-40 lg:h-48 object-contain transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        console.error(`Image failed to load: ${product.image}`);
+                        e.currentTarget.src = "https://via.placeholder.com/300x192";
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
