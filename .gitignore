@@ -27,3 +27,8 @@ node_modules/
 backend/node_modules/
 dist/
 build/
+node_modules/
+backend/node_modules/
+dist/
+build/
+backend/node_modules/.package-lock.json
