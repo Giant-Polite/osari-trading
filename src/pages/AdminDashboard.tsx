@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Package, LogOut, Search, Filter, Edit2 } from "lucide-react";
+import { Package, LogOut, Search, Filter, Edit2, Trash } from "lucide-react";
 
 type Product = {
   id: string;
@@ -218,6 +218,23 @@ export default function AdminDashboard(): JSX.Element {
     } catch (error: any) {
       console.error("Product submit error:", error);
       window.alert(`Failed to ${editingProductId ? "update" : "add"} product: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (productId: string) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.from("products").delete().eq("id", productId);
+      if (error) throw error;
+      setProducts((prev) => prev.filter((p) => p.id !== productId));
+      window.alert("Product deleted successfully.");
+    } catch (error: any) {
+      console.error("Delete error:", error);
+      window.alert(`Failed to delete product: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -822,6 +839,28 @@ export default function AdminDashboard(): JSX.Element {
                         }}
                       >
                         <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        onClick={() => handleDelete(product.id)}
+                        size="sm"
+                        className="p-2 rounded-lg transition-all duration-300"
+                        style={{
+                          background: "rgba(255, 0, 0, 0.9)",
+                          color: "#FFFFFF",
+                        }}
+                        disabled={loading}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = "rgba(255, 0, 0, 1)";
+                          e.currentTarget.style.transform = "scale(1.1)";
+                          e.currentTarget.style.boxShadow = "0 0 15px rgba(255, 0, 0, 0.6)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = "rgba(255, 0, 0, 0.9)";
+                          e.currentTarget.style.transform = "scale(1)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      >
+                        <Trash className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
