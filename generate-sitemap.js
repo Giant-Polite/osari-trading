@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import { join } from 'path';
 
 async function generateSitemap() {
-  const baseUrl = 'https://osari-trading.com';
+  const baseUrl = 'https://www.osari-trading.com';
   const supabase = createClient(
     process.env.VITE_SUPABASE_URL ?? '',
     process.env.VITE_SUPABASE_ANON_KEY ?? ''
