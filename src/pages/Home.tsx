@@ -85,7 +85,7 @@ const Home = () => {
 
           <div className="overflow-hidden">
             {products.length === 0 ? (
-              <p className="text-center text-gray-600">No products available.</p>
+              <p className="text-center text-gray-600">Products Loading...</p>
             ) : (
               <div className="flex w-max animate-scroll-left">
                 {displayProducts.map((product, index) => (

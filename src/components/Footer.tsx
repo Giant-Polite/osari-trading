@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { DateTime } from "luxon";
 
@@ -143,16 +144,22 @@ const Footer = () => {
                 { name: "Login", path: "/login" },
               ].map((link, index) => (
                 <li key={index}>
-                  <a
-                    href={link.path}
-                    className="group flex items-center space-x-2 text-accent-foreground/90 hover:text-primary transition-all duration-300"
+                  <NavLink
+                    to={link.path}
+                    end={link.path === "/"}
+                    onClick={() => console.log(`Navigating to ${link.path}`)}
+                    className={({ isActive }) =>
+                      `group flex items-center space-x-2 text-accent-foreground/90 hover:text-primary transition-all duration-300 ${
+                        isActive ? "text-primary" : ""
+                      }`
+                    }
                   >
                     <div className="w-1 h-1 rounded-full bg-primary/50 group-hover:w-4 group-hover:bg-primary transition-all duration-300" />
                     <span className="group-hover:translate-x-1 transition-transform duration-300">
                       {link.name}
                     </span>
                     <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                  </a>
+                  </NavLink>
                 </li>
               ))}
             </ul>
