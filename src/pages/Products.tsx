@@ -4,8 +4,8 @@ import { usePremiumToast } from "@/hooks/usePremiumToast";
 import { ToastContainer } from "@/components/PremiumToast";
 import TypewriterText from "@/components/TypewriterText";
 import { Input } from "@/components/ui/input";
-import { Search, Sparkles, ShoppingBag, ArrowUp } from "lucide-react";
-import { motion } from "framer-motion";
+import { Search, Sparkles, ShoppingBag, ArrowUp, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { supabase } from "../supabaseClient";
@@ -40,14 +40,14 @@ const ProductsPage = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const { toasts, showToast, removeToast } = usePremiumToast();
   const navigate = useNavigate();
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
-  const navBarRef = useRef<HTMLDivElement>(null); // Ref for the Navbar container
-  const categoryButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({}); // Refs for category buttons
+  const navBarRef = useRef<HTMLDivElement>(null);
+  const categoryButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
-  // Fetch products and categories from Supabase
   const fetchProducts = async () => {
     const { data, error } = await supabase
       .from("products")
@@ -57,19 +57,14 @@ const ProductsPage = () => {
     if (error) {
       console.error("Error fetching products:", error.message);
     } else {
-      console.log("Fetched products:", data);
       setProducts(data || []);
 
-      // Extract unique categories and sort A-Z
-      const uniqueCategories = Array.from(
-        new Set(data?.map((p) => p.category))
-      )
+      const uniqueCategories = Array.from(new Set(data?.map((p) => p.category)))
         .sort((a, b) => a.localeCompare(b))
         .map((name) => ({
           name,
           slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
         }));
-      console.log("Unique categories:", uniqueCategories);
       setCategories(uniqueCategories);
     }
   };
@@ -107,7 +102,6 @@ const ProductsPage = () => {
     setActiveCategory(slug);
   };
 
-  // Auto-scroll Navbar to center the active category
   useEffect(() => {
     if (activeCategory && navBarRef.current && categoryButtonRefs.current[activeCategory]) {
       const navBar = navBarRef.current;
@@ -117,13 +111,11 @@ const ProductsPage = () => {
       const buttonRect = activeButton.getBoundingClientRect();
       const navBarRect = navBar.getBoundingClientRect();
 
-      // Calculate the scroll position to center the active button
       const scrollLeft =
         activeButton.offsetLeft +
         buttonRect.width / 2 -
         navBarRect.width / 2;
 
-      // Smoothly scroll the Navbar
       navBar.scrollTo({
         left: scrollLeft,
         behavior: "smooth",
@@ -180,6 +172,7 @@ const ProductsPage = () => {
   return (
     <>
       <ToastContainer toasts={toasts} onClose={removeToast} />
+
       <main className="min-h-screen bg-[var(--background)] relative">
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute top-20 right-20 w-72 h-72 bg-[var(--chart-1)]/20 rounded-full blur-3xl" />
@@ -187,7 +180,6 @@ const ProductsPage = () => {
         </div>
 
         <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
-          {/* Header */}
           <motion.header
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -210,7 +202,6 @@ const ProductsPage = () => {
             </p>
           </motion.header>
 
-          {/* Search */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -229,17 +220,13 @@ const ProductsPage = () => {
             </div>
           </motion.div>
 
-          {/* Sticky Floating Category Navbar */}
           <motion.div
             className="sticky top-[64px] z-[60] mb-10 bg-white/90 backdrop-blur-md border border-gray-200/50 shadow-lg rounded-xl p-3"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div
-              ref={navBarRef}
-              className="flex gap-2 overflow-x-auto px-2 scrollbar-hide"
-            >
+            <div ref={navBarRef} className="flex gap-2 overflow-x-auto px-2 scrollbar-hide">
               {categories?.map((cat, index) => (
                 <motion.button
                   key={cat.slug}
@@ -260,7 +247,6 @@ const ProductsPage = () => {
             </div>
           </motion.div>
 
-          {/* Product Grid */}
           <div className="space-y-16 md:space-y-24 mt-12">
             {categories?.map((cat) => {
               const catProducts = productsByCategory[cat.slug];
@@ -292,7 +278,8 @@ const ProductsPage = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100 group"
+                        className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100 group cursor-pointer"
+                        onClick={() => setSelectedProduct(product)}
                       >
                         <div className="relative overflow-hidden aspect-square bg-gray-50 flex items-center justify-center">
                           <img
@@ -300,7 +287,6 @@ const ProductsPage = () => {
                             alt={product.name}
                             className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
                             onError={(e) => {
-                              console.error(`Image failed to load: ${product.image}`);
                               e.currentTarget.src = "https://via.placeholder.com/300x192";
                             }}
                           />
@@ -320,12 +306,21 @@ const ProductsPage = () => {
                             <Badge className="bg-blue-50 text-blue-700 text-xs border border-blue-200">
                               Premium Quality
                             </Badge>
-                            <Badge className={product.in_stock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"} text-xs>
+                            <Badge
+                              className={`${
+                                product.in_stock
+                                  ? "bg-green-100 text-green-700"
+                                  : "bg-red-100 text-red-700"
+                              } text-xs`}
+                            >
                               {product.in_stock ? "In Stock" : "Out of Stock"}
                             </Badge>
                           </div>
                           <Button
-                            onClick={() => handleRequestQuote(product.name)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRequestQuote(product.name);
+                            }}
                             className="w-full bg-gradient-to-r from-[#8B4513] to-[#FFD700] text-white font-medium hover:opacity-90 hover:scale-[1.02] transition-all rounded-lg py-2 shadow-md"
                           >
                             <ShoppingBag className="w-4 h-4 mr-2" />
@@ -338,13 +333,13 @@ const ProductsPage = () => {
                 </motion.section>
               );
             })}
+
             {filteredProducts.length === 0 && (
               <p className="text-center text-gray-600">No products match your filters.</p>
             )}
           </div>
         </div>
 
-        {/* Typewriter CTA */}
         <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -361,7 +356,6 @@ const ProductsPage = () => {
           </div>
         </motion.section>
 
-        {/* Scroll to Top Button */}
         {showScrollTop && (
           <Button
             onClick={scrollToTop}
@@ -372,6 +366,80 @@ const ProductsPage = () => {
           </Button>
         )}
       </main>
+
+      {/* ✅ FIXED & ANIMATED MODAL */}
+      <AnimatePresence>
+        {selectedProduct && (
+          <motion.div
+            key="product-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            onClick={() => setSelectedProduct(null)}
+            style={{ position: "fixed", overflow: "visible" }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-full mx-4 relative max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Button
+                variant="ghost"
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                onClick={() => setSelectedProduct(null)}
+              >
+                <X className="w-6 h-6" />
+              </Button>
+
+              <img
+                src={selectedProduct.image || "https://via.placeholder.com/600x400"}
+                alt={selectedProduct.name}
+                className="w-full h-auto rounded-xl mb-6 object-contain max-h-[50vh]"
+                onError={(e) => {
+                  e.currentTarget.src = "https://via.placeholder.com/600x400";
+                }}
+              />
+
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                {selectedProduct.name}
+              </h3>
+
+              <p className="text-gray-600 mb-6">
+                {selectedProduct.description || "No description available."}
+              </p>
+
+              <div className="flex gap-3 mb-6">
+                <Badge className="bg-green-500 text-white">Halal Certified</Badge>
+                <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
+                  Premium Quality
+                </Badge>
+                <Badge
+                  className={`${
+                    selectedProduct.in_stock
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {selectedProduct.in_stock ? "In Stock" : "Out of Stock"}
+                </Badge>
+              </div>
+
+              <Button
+                onClick={() => handleRequestQuote(selectedProduct.name)}
+                className="w-full bg-gradient-to-r from-[#8B4513] to-[#FFD700] text-white font-medium hover:opacity-90 transition-all rounded-lg py-6 text-lg"
+              >
+                <ShoppingBag className="w-5 h-5 mr-2" />
+                Request Bulk Quote
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -82,9 +82,9 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    perspective: 1200px;
-  }
+  @apply bg-background text-foreground antialiased;
+}
+
 }
 
 /* ===========================================================
