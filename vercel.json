@@ -17,8 +17,8 @@
       "dest": "backend/index.js"
     },
     {
-      "source": "/sitemap.xml",
-      "destination": "/sitemap.xml"
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
     },
     {
       "src": "/dist/assets/(.*)",
