@@ -161,20 +161,38 @@ const About = () => {
           </h2>
           <div className="space-y-6 text-muted-foreground leading-relaxed text-base md:text-lg">
             <p>
-              <strong className="text-primary">Osari Trading LLC</strong> is a
-              family-owned wholesale business proudly serving Minneapolis and the
-              Midwest. With three generations of experience, we specialize in
-              sourcing and distributing premium food, beverages, and certified
-              Halal products.
+              <strong className="text-primary">Osari Trading LLC</strong> is a family-owned wholesale distributor based in Minneapolis, Minnesota,
+               proudly serving restaurants, grocery stores, and food service businesses across the Midwest.
+               </p>
+               <p>
+              With three generations of experience, 
+               we specialize in sourcing and supplying premium halal-certified food products, grains, spices, and beverages from trusted global partners. 
+               Our selection includes essentials such as rice, lentils, tea, cooking oils, and authentic African and Middle Eastern spices, all carefully 
+               curated for quality and freshness.
             </p>
             <p>
-              From raw grains and spices to beverages and halal-certified items,
-              we are committed to meeting the diverse needs of restaurants,
-              grocery stores, and local businesses.
+              As a leading halal food supplier in Minneapolis, we’re dedicated to supporting local businesses with reliable service, competitive pricing, and a strong commitment to community values.
             </p>
             <p>
               At Osari Trading LLC, you’re not just a customer — you’re part of
               our extended family.
+            </p>
+            <p>
+              📍 <strong>Location:</strong> 7308 Aspen Ln N, Suite 155, Brooklyn Park, MN 55428
+              <br />
+              ⏰ <strong>Hours:</strong> Mon–Sat 9:00 AM – 6:00 PM
+              <br />
+              📞 <strong>Contact:</strong> 
+              <a href="https://www.osari-trading.com" target="_blank" rel="noopener noreferrer" className="text-primary underline ml-1">
+                www.osari-trading.com
+              </a>
+              {" | "}
+              <a href="mailto:info@osari-trading.com" className="text-primary underline">
+                sales@osaritrading.com
+              </a>
+            </p>
+            <p>
+              Supplying quality halal products for the Midwest, one partnership at a time.
             </p>
           </div>
         </motion.div>
