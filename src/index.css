@@ -101,7 +101,7 @@
   }
 }
 .animate-scroll-left {
-  animation: scroll-left 50s linear infinite;
+  animation: scroll-left 90s linear infinite;
 }
 
 /* Fade-up entrance */
