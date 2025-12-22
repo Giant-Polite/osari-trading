@@ -5,6 +5,10 @@ on:
     - cron: '0 9 * * 1,4'
   workflow_dispatch:
 
+permissions:
+  contents: write  # Allows the action to "poke" the repo to keep it active
+  actions: write   # Necessary for the keepalive action
+
 jobs:
   ping:
     runs-on: ubuntu-latest
