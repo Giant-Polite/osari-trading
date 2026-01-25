@@ -119,6 +119,10 @@ export default function ProductsPage() {
     localStorage.setItem("contactProduct", productName);
     navigate("/contact");
   };
+  const handleBackToCategories = () => {
+  setView("categories");
+  setActiveCategory(null);
+};
 
   if (loading) {
     return (
@@ -312,13 +316,51 @@ export default function ProductsPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <button 
-                  onClick={() => { setView("categories"); setActiveCategory(null); }}
-                  className="mb-16 flex items-center gap-3 text-[#1A0F0A] uppercase tracking-[0.2em] text-xs hover:text-[#D4AF37] transition-colors group"
+              {/* Ultra Luxury Sticky Back Button */}
+              <div className="sticky top-[62px] z-40 w-fit px-4 sm:px-6">
+                <motion.button
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{
+                    scale: 1.06,
+                    boxShadow: "0 10px 40px rgba(212, 175, 55, 0.35)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 18,
+                  }}
+                  onClick={handleBackToCategories}
+                  className="group relative inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 uppercase tracking-widest text-xs sm:text-sm font-medium"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(250,248,242,0.96) 100%)",
+                    border: "1px solid rgba(212, 175, 55, 0.35)",
+                    borderRadius: "3px",
+                    color: "#1A0F0A",
+                    boxShadow: "0 6px 25px rgba(0,0,0,0.08)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                  Back to Categories
-                </button>
+                  {/* Glow Layer */}
+                  <span
+                    className="absolute inset-0 -z-10 rounded-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background:
+                        "radial-gradient(circle at left, rgba(212,175,55,0.35), transparent 70%)",
+                    }}
+                  />
+
+                  <ArrowLeft
+                    className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:-translate-x-1"
+                    style={{ color: "#D4AF37" }}
+                  />
+
+                  <span>Return To Categories</span>
+                </motion.button>
+              </div>
+
 
                 <div className="space-y-16 md:space-y-32">
                   {filteredProducts.map((product, index) => {
