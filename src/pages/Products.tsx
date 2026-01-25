@@ -419,72 +419,90 @@ export default function ProductsPage() {
       </section>
 
       {/* --- PRODUCT MODAL --- */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
-            style={{ background: "rgba(26, 15, 10, 0.9)", backdropFilter: "blur(15px)" }}
-            onClick={() => setSelectedProduct(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden"
-              style={{ background: "rgba(255, 253, 249, 0.98)", borderRadius: "2px" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Button onClick={() => setSelectedProduct(null)} className="absolute top-6 right-6 z-50" style={{ background: "#1A0F0A", color: "#D4AF37", borderRadius: "0", width: "44px", height: "44px", padding: 0 }}>
-                <X className="w-5 h-5" />
-              </Button>
+<AnimatePresence>
+  {selectedProduct && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      style={{ background: "rgba(26, 15, 10, 0.9)", backdropFilter: "blur(15px)" }}
+      onClick={() => setSelectedProduct(null)}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+        // Added flex flex-col and overflow-hidden here
+        className="relative w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden"
+        style={{ background: "rgba(255, 253, 249, 0.98)", borderRadius: "2px" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button - Increased z-index to stay above everything */}
+        <Button 
+          onClick={() => setSelectedProduct(null)} 
+          className="absolute top-4 right-4 z-[110]" 
+          style={{ background: "#1A0F0A", color: "#D4AF37", borderRadius: "0", width: "40px", height: "40px", padding: 0 }}
+        >
+          <X className="w-5 h-5" />
+        </Button>
 
-              <div className="flex flex-col md:grid md:grid-cols-2 h-full overflow-y-auto">
-  
-          {/* Image Section: Ensure it shows on mobile */}
-          <div className="relative flex items-center justify-center p-8 md:p-16" style={{ background: "#F1ECE7" }}>
-            <img 
-              src={selectedProduct.image} 
-              alt={selectedProduct.name} 
-              className="w-full h-auto object-contain max-h-[300px] md:max-h-[600px]" 
-            />
-          </div>
+        {/* 1. Scrollable Area */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="flex flex-col md:grid md:grid-cols-2">
+            
+            {/* Image Section */}
+            <div className="relative flex items-center justify-center p-8 md:p-16 bg-[#F1ECE7]">
+              <img 
+                src={selectedProduct.image} 
+                alt={selectedProduct.name} 
+                className="w-full h-auto object-contain max-h-[300px] md:max-h-[600px]" 
+              />
+            </div>
 
-          {/* Content Section: Adjust padding and height for mobile */}
-              <div className="p-8 md:p-16 flex flex-col bg-white">
-                <div className="mb-6">
-                  <span className="text-[#D4AF37] tracking-[0.3em] text-[10px] uppercase block">
-                    {selectedProduct.category}
-                  </span>
-                  <h3 className="text-3xl md:text-5xl" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, color: "#1A0F0A" }}>
-                    {selectedProduct.name}
-                  </h3>
-                </div>
-                
-                {/* Make sure the text is visible and scrollable */}
-                <div className="flex-1 mb-8">
-                  <p style={{ color: "#8B7355", fontSize: "1.125rem", fontWeight: 300, lineHeight: 1.8 }}>
-                    {selectedProduct.description}
-                  </p>
-                </div>
-
-                <div className="pt-6 border-t border-stone-100">
-                  <Button 
-                    onClick={() => handleRequestQuote(selectedProduct.name)} 
-                    className="w-full py-8" 
-                    style={{ background: "#1A0F0A", color: "#D4AF37", borderRadius: "0", textTransform: "uppercase", letterSpacing: "0.15em" }}
-                  >
-                    Request Wholesale Quote
-                  </Button>
-                  </div>
-                </div>
+            {/* Text Section */}
+            <div className="p-8 md:p-16 flex flex-col bg-white">
+              <div className="mb-6">
+                <span className="text-[#D4AF37] tracking-[0.3em] text-[10px] uppercase block">
+                  {selectedProduct.category}
+                </span>
+                <h3 className="text-3xl md:text-5xl" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, color: "#1A0F0A" }}>
+                  {selectedProduct.name}
+                </h3>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              
+              <div className="prose prose-stone">
+                <p style={{ color: "#8B7355", fontSize: "1.125rem", fontWeight: 300, lineHeight: 1.8 }}>
+                  {selectedProduct.description}
+                </p>
+              </div>
+              {/* Extra padding at the bottom to ensure text isn't hidden by the sticky button on mobile */}
+              <div className="h-20 md:hidden" /> 
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Fixed/Sticky Footer Section */}
+        <div className="sticky bottom-0 left-0 right-0 p-6 md:p-8 bg-white border-t border-stone-100 z-[105]">
+          <Button 
+            onClick={() => handleRequestQuote(selectedProduct.name)} 
+            className="w-full py-8 transition-transform active:scale-95" 
+            style={{ 
+              background: "#1A0F0A", 
+              color: "#D4AF37", 
+              borderRadius: "0", 
+              textTransform: "uppercase", 
+              letterSpacing: "0.15em",
+              boxShadow: "0 -10px 20px rgba(0,0,0,0.05)" // Subtle shadow to lift it off the text
+            }}
+          >
+            Request Wholesale Quote
+          </Button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
     </main>
   );
 }
