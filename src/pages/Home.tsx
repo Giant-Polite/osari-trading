@@ -210,21 +210,39 @@ export default function Home() {
   </div>
 
           {/* CTA */}
-          <Link to="/products">
+          <Link to="/products" className="block mt-20 md:mt-12 group"> 
             <motion.button
-              className="relative px-10 py-5 bg-white text-black font-medium tracking-wide overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 1 }}
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative px-12 py-6 bg-white overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.1)] transition-shadow duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.3)]"
             >
-              <span className="relative z-10 flex items-center gap-3">
-                Explore Our Collection <ArrowRight />
-              </span>
+              {/* Subtle sweep animation that runs constantly */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-amber-400 to-yellow-500"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
+                className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-amber-100/40 to-transparent"
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
               />
+
+              {/* The colorful hover state: Multi-stop Metallic Gradient */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-[#8B7355] via-[#D4AF37] via-[#F5E6CA] via-[#D4AF37] to-[#8B7355] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "0%" }}
+                transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
+              />
+
+              <span className="relative z-10 flex items-center gap-4 text-xs md:text-sm font-bold tracking-[0.2em] text-black group-hover:text-white transition-colors duration-500">
+                EXPLORE OUR COLLECTION 
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.span>
+              </span>
             </motion.button>
           </Link>
         </div>
@@ -255,7 +273,7 @@ export default function Home() {
               className="text-5xl md:text-7xl font-light text-white leading-none mb-8"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Our <span className="italic text-[#D4AF37]">Curreted</span> Reserve
+              Our <span className="italic text-[#D4AF37]">Curated</span> Reserve
             </motion.h2>
             
             <motion.p 
@@ -348,9 +366,16 @@ export default function Home() {
           VALUE PROPS
           ======================================== */}
       <section className="py-32 px-6 md:px-12 lg:px-24">
-        <h2 className="text-4xl md:text-5xl font-light mb-24">
-          Why Choose Us
-        </h2>
+        <motion.h2 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+              className="text-4xl md:text-7xl font-light text-white leading-none mb-8"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Why <span className="italic text-[#D4AF37]">Choose</span> Us
+            </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-16">
           {[

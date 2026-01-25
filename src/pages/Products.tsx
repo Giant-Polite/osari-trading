@@ -151,7 +151,7 @@ export default function ProductsPage() {
             src="/Hero_Background.jpeg"
             alt="Osari Trading Luxury Background"
             className="w-full h-full object-cover"
-            style={{ filter: "blur(8px) brightness(0.4)" }}
+            style={{ filter: "blur(1px) brightness(0.4)" }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#1A0F0A]/80 via-[#2A1F1A]/60 to-[#1A0F0A]/90" />
         </div>
@@ -164,7 +164,7 @@ export default function ProductsPage() {
           <div className="relative group">
             <Search
               className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5"
-              style={{ color: "#D4AF37" }}
+              style={{ color: "#272725ff" }}
             />
             <Input
               type="text"
