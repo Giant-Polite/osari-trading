@@ -1,447 +1,426 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePremiumToast } from "@/hooks/usePremiumToast";
-import { ToastContainer } from "@/components/PremiumToast";
-import TypewriterText from "@/components/TypewriterText";
-import { Input } from "@/components/ui/input";
-import { Search, Sparkles, ShoppingBag, ArrowUp, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import { 
+  Search, 
+  X, 
+  ShoppingBag, 
+  ArrowLeft, 
+  ChevronRight, 
+  Filter, 
+  Menu 
+} from "lucide-react";
+
+// UI Components - Assuming shadcn/ui pattern
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
+// Supabase Client
 import { supabase } from "../supabaseClient";
 
-const addToCart = (productName: string) => {
-  const cart = JSON.parse(localStorage.getItem("cartProducts") || "[]") as string[];
-  if (!cart.includes(productName)) {
-    cart.push(productName);
-    localStorage.setItem("cartProducts", JSON.stringify(cart));
-    return true;
-  }
-  return false;
-};
-
+/**
+ * TYPES
+ */
 interface Product {
-  id: string;
+  id: string | number;
   name: string;
   category: string;
-  description?: string;
+  description: string;
   image: string;
   in_stock: boolean;
+  price?: string;
 }
 
 interface Category {
   name: string;
-  slug: string;
+  image_url: string;
 }
 
-const ProductsPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+/**
+ * UTILITY: Truncate Text
+ */
+const truncateText = (text: string, wordLimit: number): string => {
+  const words = text.split(" ");
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(" ") + "...";
+  }
+  return text;
+};
 
-  const { toasts, showToast, removeToast } = usePremiumToast();
+export default function ProductsPage() {
   const navigate = useNavigate();
-  const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
-  const navBarRef = useRef<HTMLDivElement>(null);
-  const categoryButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
+  
+  // --- STATE ---
+  const [products, setProducts] = useState<Product[]>([]);
+  const [dbCategories, setDbCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [view, setView] = useState<"categories" | "products">("categories");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const fetchProducts = async () => {
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Error fetching products:", error.message);
-    } else {
-      setProducts(data || []);
-
-      const uniqueCategories = Array.from(new Set(data?.map((p) => p.category)))
-        .sort((a, b) => a.localeCompare(b))
-        .map((name) => ({
-          name,
-          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        }));
-      setCategories(uniqueCategories);
-    }
-  };
-
+  // --- DATA FETCHING ---
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch products and categories. 
+        // Note: Removed 'tagline' from select to match your schema.
+        const [productsRes, categoriesRes] = await Promise.all([
+          supabase
+            .from("products")
+            .select("*")
+            .order("created_at", { ascending: false }),
+          supabase
+            .from("categories")
+            .select("name, image_url")
+        ]);
 
-  const filteredProducts = useMemo(() => {
-    if (!products) return [];
-    const term = searchTerm.toLowerCase();
-    return products.filter(
-      (p) =>
-        p.name.toLowerCase().includes(term) ||
-        (p.description?.toLowerCase().includes(term) ?? false)
-    );
-  }, [products, searchTerm]);
+        if (productsRes.error) console.error("Products Error:", productsRes.error);
+        if (categoriesRes.error) console.error("Categories Error:", categoriesRes.error);
 
-  const productsByCategory = useMemo(() => {
-    const grouped: Record<string, Product[]> = {};
-    filteredProducts.forEach((p) => {
-      const catSlug = p.category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      if (!grouped[catSlug]) grouped[catSlug] = [];
-      grouped[catSlug].push(p);
-    });
-    return grouped;
-  }, [filteredProducts]);
+        if (productsRes.data) setProducts(productsRes.data);
+        if (categoriesRes.data) setDbCategories(categoriesRes.data);
 
-  const scrollToCategory = (slug: string) => {
-    const el = categoryRefs.current[slug];
-    if (!el) return;
-    const offset = 90;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: "smooth" });
-    setActiveCategory(slug);
-  };
-
-  useEffect(() => {
-    if (activeCategory && navBarRef.current && categoryButtonRefs.current[activeCategory]) {
-      const navBar = navBarRef.current;
-      const activeButton = categoryButtonRefs.current[activeCategory];
-      if (!activeButton) return;
-
-      const buttonRect = activeButton.getBoundingClientRect();
-      const navBarRect = navBar.getBoundingClientRect();
-
-      const scrollLeft =
-        activeButton.offsetLeft +
-        buttonRect.width / 2 -
-        navBarRect.width / 2;
-
-      navBar.scrollTo({
-        left: scrollLeft,
-        behavior: "smooth",
-      });
-    }
-  }, [activeCategory]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setShowScrollTop(scrollY > 400);
-
-      const scrollPos = scrollY + 140;
-      let found = false;
-
-      for (const [slug, el] of Object.entries(categoryRefs.current)) {
-        if (!el) continue;
-        const { offsetTop, offsetHeight } = el;
-        if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-          setActiveCategory(slug);
-          found = true;
-          break;
-        }
+      } catch (err) {
+        console.error("Critical Fetch Error:", err);
+      } finally {
+        setLoading(false);
       }
-      if (!found) setActiveCategory("");
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [productsByCategory]);
+    fetchData();
+  }, []);
+
+  // --- LOGIC: FILTERING & CATEGORIES ---
+  const categories = useMemo(() => {
+    // This shows ALL categories found in your categories table,
+    // ensuring the grid isn't empty even if products aren't assigned yet.
+    return dbCategories.map((cat) => ({
+      name: cat.name,
+      tagline: "Premium Selection", // Hardcoded since it's not in your DB schema
+      image: cat.image_url || "/Hero_Background.jpeg", 
+    })).sort((a, b) => a.name.localeCompare(b.name));
+  }, [dbCategories]);
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            product.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = activeCategory ? product.category === activeCategory : true;
+      return matchesSearch && matchesCategory;
+    });
+  }, [products, searchTerm, activeCategory]);
 
   const handleRequestQuote = (productName: string) => {
     localStorage.setItem("contactProduct", productName);
-    if (addToCart(productName)) {
-      showToast({
-        title: "Request Sent",
-        description: `${productName} has been added to the contact form.`,
-        variant: "success",
-        duration: 3000,
-      });
-    } else {
-      showToast({
-        title: "Already in Cart",
-        description: `${productName} is already in the contact form.`,
-        variant: "info",
-        duration: 3000,
-      });
-    }
     navigate("/contact");
   };
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  if (loading) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-[#1A0F0A]">
+        <motion.div 
+          animate={{ opacity: [0.4, 1, 0.4] }} 
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="font-serif text-[#D4AF37] text-2xl tracking-widest uppercase"
+        >
+          Osari Trading LLC
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <ToastContainer toasts={toasts} onClose={removeToast} />
-
-      <main className="min-h-screen bg-[var(--background)] relative">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-20 right-20 w-72 h-72 bg-[var(--chart-1)]/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-[var(--chart-4)]/20 rounded-full blur-3xl" />
+    <main className="min-h-screen bg-[#FFFDF9] selection:bg-[#D4AF37]/20">
+      
+      {/* --- FIGMA HERO SECTION - HALF PAGE --- */}
+      <section className="relative h-[50vh] flex flex-col items-center justify-center px-4 md:px-8 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden z-0">
+          <motion.img
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 10, ease: "easeOut" }}
+            src="/Hero_Background.jpeg"
+            alt="Osari Trading Luxury Background"
+            className="w-full h-full object-cover"
+            style={{ filter: "blur(8px) brightness(0.4)" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A0F0A]/80 via-[#2A1F1A]/60 to-[#1A0F0A]/90" />
         </div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative z-30 w-full max-w-2xl mb-8"
+        >
+          <div className="relative group">
+            <Search
+              className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5"
+              style={{ color: "#D4AF37" }}
+            />
+            <Input
+              type="text"
+              placeholder="Search our collection..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                if (e.target.value && view === "categories") setView("products");
+              }}
+              onFocus={() => setIsSearchActive(true)}
+              onBlur={() => setTimeout(() => setIsSearchActive(false), 200)}
+              className="pl-14 pr-6 py-7 text-base border-none shadow-2xl backdrop-blur-xl transition-all"
+              style={{
+                background: isSearchActive
+                  ? "rgba(255, 253, 249, 0.15)"
+                  : "rgba(255, 253, 249, 0.08)",
+                color: "#FFFDF9",
+                borderRadius: "999px",
+              }}
+            />
+          </div>
+        </motion.div>
 
-        <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
-          <motion.header
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-10 md:mb-16 text-center"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="relative z-20 text-center"
+        >
+          <h1
+            className="mb-4"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(2.5rem, 8vw, 5.5rem)",
+              fontWeight: 300,
+              letterSpacing: "0.05em",
+              background: "linear-gradient(135deg, #D4AF37 0%, #F5E6CA 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              lineHeight: 1.1,
+            }}
           >
-            <div className="inline-flex items-center gap-2 glass px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
-              <Sparkles className="w-4 h-4 text-[var(--chart-1)]" />
-              <span className="text-sm font-medium gradient-text-gold">
-                Premium Halal Quality Products
-              </span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold gradient-text-gold mb-4 leading-tight">
-              Our Products
-            </h1>
-            <p className="text-base md:text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              Explore our authentic, premium-quality halal products —{" "}
-              <span className="text-[var(--chart-1)]">crafted with care</span> for
-              exceptional taste.
-            </p>
-          </motion.header>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-6 max-w-2xl mx-auto"
+            {activeCategory || "Osari Trading"}
+          </h1>
+          <p
+            className="max-w-xl mx-auto uppercase tracking-[0.2em]"
+            style={{
+              color: "#F5E6CA",
+              fontSize: "0.85rem",
+              fontWeight: 300,
+            }}
           >
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Search for products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 pr-6 py-5 border-2 border-[var(--border)] focus:border-[var(--chart-1)] focus:ring-4 focus:ring-[var(--chart-1)]/20 rounded-2xl shadow-lg"
-              />
-            </div>
-          </motion.div>
+            Experience A Curated Collection Of High-Quality Halal Products,
+             Delivered With Freshness And Excellence For Restaurants, Grocery Stores, And Local Businesses.
 
-          <motion.div
-            className="sticky top-[64px] z-[60] mb-10 bg-white/90 backdrop-blur-md border border-gray-200/50 shadow-lg rounded-xl p-3"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div ref={navBarRef} className="flex gap-2 overflow-x-auto px-2 scrollbar-hide">
-              {categories?.map((cat, index) => (
-                <motion.button
-                  key={cat.slug}
-                  ref={(el) => (categoryButtonRefs.current[cat.slug] = el)}
-                  onClick={() => scrollToCategory(cat.slug)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
-                    activeCategory === cat.slug
-                      ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md scale-105"
-                      : "bg-white hover:bg-orange-50 text-gray-700"
-                  }`}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  {cat.name}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
 
-          <div className="space-y-16 md:space-y-24 mt-12">
-            {categories?.map((cat) => {
-              const catProducts = productsByCategory[cat.slug];
-              if (!catProducts?.length) return null;
+          </p>
+        </motion.div>
 
-              return (
-                <motion.section
-                  key={cat.slug}
-                  ref={(el) => (categoryRefs.current[cat.slug] = el)}
-                  initial={{ opacity: 0, y: 30 }}
+        <AnimatePresence>
+          {isSearchActive && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 backdrop-blur-sm bg-black/40 z-10"
+            />
+          )}
+        </AnimatePresence>
+      </section>
+
+      {/* --- CONTENT AREA --- */}
+      <section className="relative z-10 pt-24 pb-32 px-4 md:px-8 lg:px-16 bg-[#FFFDF9]">
+        <div className="max-w-7xl mx-auto">
+          
+          <AnimatePresence mode="wait">
+            {view === "categories" ? (
+              <motion.div
+                key="categories"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="scroll-mt-[120px]"
+                  className="text-center mb-20"
                 >
-                  <div className="flex items-center justify-between mb-8 px-2">
-                    <h2 className="text-3xl bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent font-bold">
-                      {cat.name}
-                    </h2>
-                    <Badge className="bg-orange-100 text-orange-700 px-4 py-1">
-                      {catProducts.length} items
-                    </Badge>
-                  </div>
+                  <span className="text-[#D4AF37] uppercase tracking-[0.4em] text-[10px] md:text-xs mb-4 block">
+                    OSARI TRADING
+                  </span>
+                  <h2 
+                    style={{ 
+                      fontFamily: "'Cormorant Garamond', serif", 
+                      fontSize: "clamp(2.5rem, 5vw, 4rem)", 
+                      color: "#1A0F0A",
+                      fontWeight: 300,
+                      lineHeight: 1
+                    }}
+                  >
+                    Our Inventory
+                  </h2>
+                  <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto mt-8 opacity-50" />
+                </motion.div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2">
-                    {catProducts.map((product, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                  {categories.map((cat, idx) => (
+                    <motion.div
+                      key={cat.name}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      onClick={() => {
+                        setActiveCategory(cat.name);
+                        setView("products");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className="group relative h-[500px] md:h-[650px] overflow-hidden cursor-pointer"
+                    >
+                      <img 
+                        src={cat.image} 
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                        alt={cat.name} 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A0F0A] via-[#1A0F0A]/20 to-transparent" />
+                      
+                      <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
+                        <span className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs mb-3">
+                          {cat.tagline}
+                        </span>
+                        <h2 className="font-serif text-4xl md:text-5xl text-white mb-6 group-hover:tracking-wider transition-all duration-500">
+                          {cat.name}
+                        </h2>
+                        <div className="flex items-center gap-4 text-white/60 text-xs tracking-[0.2em] uppercase group-hover:text-[#D4AF37] transition-colors">
+                          Browse Collection 
+                          <span className="w-12 h-[1px] bg-white/30 group-hover:w-20 group-hover:bg-[#D4AF37] transition-all" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="products"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <button 
+                  onClick={() => { setView("categories"); setActiveCategory(null); }}
+                  className="mb-16 flex items-center gap-3 text-[#1A0F0A] uppercase tracking-[0.2em] text-xs hover:text-[#D4AF37] transition-colors group"
+                >
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                  Back to Categories
+                </button>
+
+                <div className="space-y-16 md:space-y-32">
+                  {filteredProducts.map((product, index) => {
+                    const isEven = index % 2 === 0;
+                    return (
                       <motion.div
                         key={product.id}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100 group cursor-pointer"
-                        onClick={() => setSelectedProduct(product)}
+                        viewport={{ once: true }}
+                        className={`grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-16 items-center ${
+                          isEven ? "" : "md:flex-row-reverse"
+                        }`}
                       >
-                        <div className="relative overflow-hidden aspect-square bg-gray-50 flex items-center justify-center">
-                          <img
-                            src={product.image || "https://via.placeholder.com/300x192"}
-                            alt={product.name}
-                            className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                              e.currentTarget.src = "https://via.placeholder.com/300x192";
-                            }}
-                          />
+                        <div
+                          className={`${isEven ? "md:col-span-7" : "md:col-span-7 md:col-start-6"} cursor-pointer group`}
+                          onClick={() => setSelectedProduct(product)}
+                        >
+                          <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                              style={{ boxShadow: "0 20px 60px rgba(26, 15, 10, 0.15)" }}
+                            />
+                          </div>
                         </div>
 
-                        <div className="p-5">
-                          <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-1">
+                        <div className={`${isEven ? "md:col-span-5" : "md:col-span-5 md:col-start-1 md:row-start-1"} space-y-4 md:space-y-6`}>
+                          <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 400, color: "#1A0F0A", letterSpacing: "0.02em", lineHeight: 1.1 }}>
                             {product.name}
                           </h3>
-                          <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                            {product.description || "No description"}
+                          <p className="hidden md:block" style={{ color: "#8B7355", fontSize: "1.125rem", fontWeight: 300, lineHeight: 1.8 }}>
+                            {truncateText(product.description || "", 20)}
                           </p>
-                          <div className="flex gap-2 mb-4">
-                            <Badge className="bg-green-500 text-white text-xs">
-                              Halal Certified
+                          <div className="flex flex-wrap gap-3">
+                            <Badge className="px-3 py-1 text-[10px]" style={{ background: "transparent", border: "1px solid #D4AF37", color: "#D4AF37", borderRadius: "2px", fontWeight: 400, letterSpacing: "0.05em" }}>
+                              HALAL CERTIFIED
                             </Badge>
-                            <Badge className="bg-blue-50 text-blue-700 text-xs border border-blue-200">
-                              Premium Quality
-                            </Badge>
-                            <Badge
-                              className={`${
-                                product.in_stock
-                                  ? "bg-green-100 text-green-700"
-                                  : "bg-red-100 text-red-700"
-                              } text-xs`}
-                            >
-                              {product.in_stock ? "In Stock" : "Out of Stock"}
+                            <Badge className="px-3 py-1 text-[10px]" style={{ background: product.in_stock ? "rgba(212, 175, 55, 0.1)" : "rgba(139, 115, 85, 0.1)", border: "none", color: product.in_stock ? "#D4AF37" : "#8B7355", borderRadius: "2px", fontWeight: 400, letterSpacing: "0.05em" }}>
+                              {product.in_stock ? "AVAILABLE" : "OUT OF STOCK"}
                             </Badge>
                           </div>
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRequestQuote(product.name);
-                            }}
-                            className="w-full bg-gradient-to-r from-[#8B4513] to-[#FFD700] text-white font-medium hover:opacity-90 hover:scale-[1.02] transition-all rounded-lg py-2 shadow-md"
-                          >
-                            <ShoppingBag className="w-4 h-4 mr-2" />
+                          <Button onClick={() => handleRequestQuote(product.name)} className="group transition-all duration-300 hover:scale-105 w-full md:w-auto" style={{ background: "transparent", border: "1px solid #D4AF37", color: "#D4AF37", padding: "1.5rem 3rem", borderRadius: "2px", fontSize: "0.75rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" }}>
                             Request Bulk Quote
                           </Button>
                         </div>
                       </motion.div>
-                    ))}
-                  </div>
-                </motion.section>
-              );
-            })}
-
-            {filteredProducts.length === 0 && (
-              <p className="text-center text-gray-600">No products match your filters.</p>
+                    );
+                  })}
+                </div>
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
         </div>
+      </section>
 
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative mt-20 md:mt-32 py-12 md:py-20 overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600"></div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="flex justify-center items-center gap-3 text-center text-white text-3xl md:text-5xl font-bold">
-              <span>Would you like some</span>
-              <TypewriterText speed={99} />
-            </div>
-          </div>
-        </motion.section>
-
-        {showScrollTop && (
-          <Button
-            onClick={scrollToTop}
-            className="fixed bottom-4 right-4 rounded-full p-3 shadow-lg"
-            style={{ background: "#FFD700", color: "#8B6F47" }}
-          >
-            <ArrowUp className="w-6 h-6" />
-          </Button>
-        )}
-      </main>
-
-      {/* ✅ FIXED & ANIMATED MODAL */}
+      {/* --- PRODUCT MODAL --- */}
       <AnimatePresence>
         {selectedProduct && (
           <motion.div
-            key="product-modal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+            style={{ background: "rgba(26, 15, 10, 0.9)", backdropFilter: "blur(15px)" }}
             onClick={() => setSelectedProduct(null)}
-            style={{ position: "fixed", overflow: "visible" }}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-full mx-4 relative max-h-[90vh] overflow-y-auto"
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden"
+              style={{ background: "rgba(255, 253, 249, 0.98)", borderRadius: "2px" }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Button
-                variant="ghost"
-                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                onClick={() => setSelectedProduct(null)}
-              >
-                <X className="w-6 h-6" />
+              <Button onClick={() => setSelectedProduct(null)} className="absolute top-6 right-6 z-50" style={{ background: "#1A0F0A", color: "#D4AF37", borderRadius: "0", width: "44px", height: "44px", padding: 0 }}>
+                <X className="w-5 h-5" />
               </Button>
-
-              <img
-                src={selectedProduct.image || "https://via.placeholder.com/600x400"}
-                alt={selectedProduct.name}
-                className="w-full h-auto rounded-xl mb-6 object-contain max-h-[50vh]"
-                onError={(e) => {
-                  e.currentTarget.src = "https://via.placeholder.com/600x400";
-                }}
-              />
-
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                {selectedProduct.name}
-              </h3>
-
-              <p className="text-gray-600 mb-6">
-                {selectedProduct.description || "No description available."}
-              </p>
-
-              <div className="flex gap-3 mb-6">
-                <Badge className="bg-green-500 text-white">Halal Certified</Badge>
-                <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
-                  Premium Quality
-                </Badge>
-                <Badge
-                  className={`${
-                    selectedProduct.in_stock
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
-                  }`}
-                >
-                  {selectedProduct.in_stock ? "In Stock" : "Out of Stock"}
-                </Badge>
+              <div className="hidden md:grid md:grid-cols-2 h-full overflow-y-auto">
+                <div className="relative flex items-center justify-center p-16" style={{ background: "#F1ECE7" }}>
+                  <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-auto object-contain max-h-[600px]" />
+                </div>
+                <div className="p-8 md:p-16 flex flex-col h-[90vh] bg-white">
+                  <div className="mb-6">
+                    <span className="text-[#D4AF37] tracking-[0.3em] text-[10px] uppercase block">{selectedProduct.category}</span>
+                    <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3rem", fontWeight: 400, color: "#1A0F0A" }}>{selectedProduct.name}</h3>
+                  </div>
+                  <div className="flex-1 overflow-y-auto pr-4 mb-8">
+                    <p style={{ color: "#8B7355", fontSize: "1.125rem", fontWeight: 300, lineHeight: 1.8 }}>{selectedProduct.description}</p>
+                  </div>
+                  <div className="pt-6 border-t border-stone-100">
+                    <Button onClick={() => handleRequestQuote(selectedProduct.name)} className="w-full py-8" style={{ background: "#1A0F0A", color: "#D4AF37", borderRadius: "0", textTransform: "uppercase", letterSpacing: "0.15em" }}>
+                      Request Wholesale Quote
+                    </Button>
+                  </div>
+                </div>
               </div>
-
-              <Button
-                onClick={() => handleRequestQuote(selectedProduct.name)}
-                className="w-full bg-gradient-to-r from-[#8B4513] to-[#FFD700] text-white font-medium hover:opacity-90 transition-all rounded-lg py-6 text-lg"
-              >
-                <ShoppingBag className="w-5 h-5 mr-2" />
-                Request Bulk Quote
-              </Button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </main>
   );
-};
-
-export default ProductsPage;
+}
