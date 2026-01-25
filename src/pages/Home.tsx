@@ -104,27 +104,110 @@ export default function Home() {
           <div className="absolute top-2/3 right-1/3 w-1 h-1 bg-yellow-500/40 rounded-full blur-sm" />
         </motion.div>
 
-        <div className="relative z-10 max-w-7xl mx-auto w-full">
-          {/* Logo */}
-          <motion.h1
-            className="text-[clamp(3rem,8vw,8rem)] font-light tracking-tighter mb-12"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            OSARI TRADING
-          </motion.h1>
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12">
+  <div className="flex flex-col items-start">
+    
+    {/* --- BRAND ARCHITECTURE (Logo) --- */}
+    <div className="relative mb-20 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, letterSpacing: "0.2em" }}
+        animate={{ opacity: 1, letterSpacing: "0.6em" }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="text-[#D4AF37] text-[10px] md:text-xs font-medium mb-4 uppercase"
+      >
+        The Gold Standard of Distribution
+      </motion.div>
+      
+      <motion.h1
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+        className="relative leading-[0.85] flex flex-col md:flex-row md:items-end gap-x-8"
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "clamp(4rem, 12vw, 9.5rem)",
+          fontWeight: 300,
+        }}
+      >
+        <span className="text-[#FFFDF9] italic tracking-tight">OSARI</span>
+        <span 
+          className="text-transparent bg-clip-text bg-gradient-to-tr from-[#D4AF37] via-[#F5E6CA] to-[#8B7355] tracking-tighter"
+          style={{ fontWeight: 200 }}
+        >
+          TRADING
+        </span>
+      </motion.h1>
+      
+      {/* Decorative hairline */}
+      <motion.div 
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 1, duration: 1.5 }}
+        className="h-[1px] w-full bg-gradient-to-r from-[#D4AF37]/40 to-transparent origin-left mt-4"
+      />
+    </div>
 
-          {/* Headline */}
-          <div className="mb-24">
-            <p className="text-xl md:text-2xl text-zinc-400 mb-6 font-light">
-              Family-Owned Wholesale Distributor Based In Minneapolis, Minnesota, Proudly Serving Restaurants, Grocery Stores, and Food Service Businesses Across The Midwest.
-            </p>
-            <div className="min-h-[80px] flex items-center gap-4 text-3xl md:text-5xl font-light">
-              <span>Bringing You the Very Best In</span>
-              <TypewriterText speed={80} />
-            </div>
-          </div>
+    {/* --- MISSION STATEMENT & TAGLINE --- */}
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full">
+      
+      {/* Narrative Text */}
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.8, duration: 1 }}
+        className="md:col-span-5 border-l border-[#D4AF37]/20 pl-6 md:pl-10"
+      >
+        <p className="text-sm md:text-base text-[#F5E6CA]/80 font-light leading-relaxed uppercase tracking-widest italic mb-6">
+          Established in Minneapolis
+        </p>
+        <p className="text-lg md:text-xl text-zinc-300 font-light leading-relaxed">
+          A Family Owned Legacy, Delivering Excellence To The Midwest’s Finest 
+          <span className="text-white font-normal"> Restaurants</span>, 
+          <span className="text-white font-normal"> Grocery Stores</span> and
+          <span className="text-white font-normal"> Food Service Businesses</span> Across The Midwest.
+        </p>
+      </motion.div>
+
+      {/* Dynamic Reveal Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 1 }}
+        className="md:col-span-7 flex flex-col justify-end"
+      >
+        <div className="h-[1px] w-12 bg-[#D4AF37] mb-8 hidden md:block" />
+        <h2 className="text-3xl md:text-5xl font-light text-[#FFFDF9] leading-tight">
+          <span className="opacity-50 italic">The Artistry Of </span>
+          <br className="hidden md:block" />
+          <span className="relative">
+             Wholesale Excellence
+            <motion.span 
+              className="absolute -bottom-2 left-0 h-[2px] bg-[#D4AF37]"
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ delay: 2, duration: 1 }}
+            />
+          </span>
+        </h2>
+        
+        {/* If you still want the Typewriter, place it here with a minimalist style */}
+        <div className="mt-8 pt-6 border-t border-white/5 flex flex-col gap-2">
+  <div className="flex items-center gap-3 text-[#D4AF37] tracking-[0.2em] text-[10px] uppercase font-semibold">
+    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+    <span>Bringing You the Very Best In:</span>
+  </div>
+
+  {/* This container prevents the layout shift */}
+  <div className="relative h-8 md:h-20 flex items-center overflow-hidden">
+    <span className="text-xl md:text-2xl font-light text-white/90 italic">
+      <TypewriterText speed={100} />
+    </span>
+  </div>
+</div>
+      </motion.div>
+
+    </div>
+  </div>
 
           {/* CTA */}
           <Link to="/products">
@@ -147,17 +230,77 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========================================
-          PRODUCT SLIDER
+            {/* ========================================
+          PRODUCT SELECTION INTRO: ULTRA LUXURY
           ======================================== */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="px-6 md:px-12 lg:px-24 mb-16">
-          <h2 className="text-4xl md:text-5xl font-light mb-4">
-            Our Selection
-          </h2>
-          <p className="text-zinc-400 text-xl font-light">
-            Curated With Precision. Delivered With Care.
-          </p>
+
+      <section className="relative pt-40 pb-20 overflow-hidden bg-[#050505]">
+        {/* Header: Editorial Alignment */}
+        <div className="relative z-10 px-6 md:px-12 lg:px-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="max-w-2xl">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-[#D4AF37] text-xs uppercase tracking-[0.5em] block mb-6 font-medium"
+            >
+              The Osari Standard
+            </motion.span>
+            
+            <motion.h2 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+              className="text-5xl md:text-7xl font-light text-white leading-none mb-8"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Our <span className="italic text-[#D4AF37]">Curreted</span> Reserve
+            </motion.h2>
+            
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="text-zinc-500 text-lg md:text-xl font-light tracking-wide max-w-md leading-relaxed"
+            >
+              The Definitive Collection Of Premium Halal Supplies, Authenticated And Sourced From Earth’s Most Celebrated Producers.
+            </motion.p>
+          </div>
+          
+          {/* Decorative Counter / Inventory Marker */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8 }}
+            className="hidden md:block text-right"
+          >
+            <span className="text-7xl font-extralight text-zinc-800 leading-none select-none">
+              {String(products.length).padStart(2, '0')}
+            </span>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#D4AF37] mt-2 font-semibold">
+              Curated Unique Items
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Background Text Decor: This creates the "High Fashion" texture */}
+        <div className="absolute -bottom-10 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] select-none">
+          <motion.span 
+            initial={{ x: 0 }}
+            animate={{ x: "-20%" }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="text-[18rem] font-serif whitespace-nowrap italic text-white block"
+          >
+            Quality Excellence Sourcing Purity Quality Excellence Sourcing Purity
+          </motion.span>
+        </div>
+        
+        {/* Subtle Gold Hairline separator at bottom */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mt-20">
+          <div className="h-[1px] w-full bg-gradient-to-r from-[#D4AF37]/30 via-transparent to-transparent" />
         </div>
 
         <div className="relative">
@@ -177,11 +320,11 @@ export default function Home() {
                     className="flex-shrink-0 w-80 md:w-96 mx-4 group"
                     whileHover={{ scale: 1.05 }}
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 border border-zinc-800">
+                    <div className="relative aspect-[2/2] overflow-hidden bg-zinc-900 border border-zinc-800">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
                         onError={(e) => {
                           e.currentTarget.src =
@@ -190,9 +333,7 @@ export default function Home() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute bottom-0 p-6">
-                        <h3 className="text-xl font-light bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                          {product.name}
-                        </h3>
+
                       </div>
                     </div>
                   </motion.div>
@@ -261,7 +402,7 @@ export default function Home() {
             Ready to Elevate Your Offerings?
           </h2>
           <p className="text-zinc-400 text-xl mb-12 font-light">
-            Join industry leaders who trust Osari for premium sourcing.
+            Join Industry Leaders Who Trust Osari Trading for Premium Sourcing.
           </p>
 
           <Link to="/contact">
