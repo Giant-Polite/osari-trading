@@ -158,7 +158,7 @@ export default function Home() {
         className="md:col-span-5 border-l border-[#D4AF37]/20 pl-6 md:pl-10"
       >
         <p className="text-sm md:text-base text-[#F5E6CA]/80 font-light leading-relaxed uppercase tracking-widest italic mb-6">
-          Established in Minneapolis
+          Established in Minnesota
         </p>
         <p className="text-lg md:text-xl text-zinc-300 font-light leading-relaxed">
           A Family Owned Legacy, Delivering Excellence To The Midwest’s Finest 
