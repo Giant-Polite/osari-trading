@@ -7,6 +7,7 @@ import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -269,6 +270,9 @@ export default function Login() {
               <Home className="w-4 h-4" />
               Back to Home
             </motion.a>
+            <div className="mt-8 pt-6 border-t border-primary/20 text-center text-Strong-foreground/70 text-sm">
+          © {currentYear} Osari Trading. All rights reserved.
+        </div>
           </motion.div>
         </motion.div>
 
@@ -279,7 +283,9 @@ export default function Login() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.8 }}
         >
-          <p className="text-[13px] text-gray-600">© 2025 Osari Trading</p>
+          <div className="mt-8 pt-6 border-t border-primary/20 text-center text-accent-foreground/70 text-sm">
+          © {currentYear} Osari Trading. All rights reserved.
+        </div>
         </motion.div>
       </div>
     </div>
