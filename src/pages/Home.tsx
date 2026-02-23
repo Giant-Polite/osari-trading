@@ -322,8 +322,9 @@ export default function Home() {
         </div>
 
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-64 bg-gradient-to-r from-zinc-950 to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-64 bg-gradient-to-l from-zinc-950 to-transparent z-10" />
+          {/* We reduced the width from w-64 to w-16 on mobile (md:w-64) */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-64 bg-gradient-to-r from-zinc-950 to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-64 bg-gradient-to-l from-zinc-950 to-transparent z-10" />
 
           <div className="overflow-hidden">
             {products.length === 0 ? (
@@ -349,7 +350,8 @@ export default function Home() {
                             "https://via.placeholder.com/600x450";
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      {/* 'hidden md:block' ensures the darkness only appears on larger screens */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent hidden md:block" />
                       <div className="absolute bottom-0 p-6">
 
                       </div>
